@@ -15,12 +15,14 @@
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($row['count'] > 0) {
-        // badge number already exists, display error message
+        // criminal ID already exists, display error message
         echo "Error: Criminal ID already exists.";
     } else {
-        // badge number is unique, insert new officer record
-        $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias, crime_id)
-        values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias','$crime_id')";
+        // criminal ID is unique, insert new criminal record
+        $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias)
+        values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias')";
+        // $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias, crime_id)
+        // values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias','$crime_id')";
         $result = mysqli_query($conn, $sql);
         if($result){
             echo $criminal_name. " entered successfully!";
