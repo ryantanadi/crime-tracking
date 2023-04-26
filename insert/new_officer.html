@@ -89,7 +89,7 @@
 	<form action="new_officer.php" method="post">
 		Badge Number: <button type="button" class="btn btn-secondary" onclick="generateBadgeNumber()">Generate</button>
 		<div class="input-group">
-			<input type="text" id="badge_number" name="badge_number" required><br> 		</div>
+			<input type="number" id="badge_number" name="badge_number" required><br> 		</div>
 		Officer Name: 
 		<div class="input-group">
 			<input type="text" id="officer_name" name="officer_name" required><br>
@@ -100,11 +100,15 @@
 		</div>
 		Phone Contact: 
 		<div class="input-group">
-			<input type="text" id="phone_contact" name="phone_contact" required><br>
+			<input type="tel" id="phone_contact" name="phone_contact" required><br>
 		</div>
 		Status: 
 		<div class="input-group">
-			<input type="text" id="status" name="status" required><br>
+			<select id="status" name="status" required>
+				<option value="" selected disabled>Select Status</option>
+				<option value="Active">Active</option>
+				<option value="Inactive">Inactive</option>
+			  </select>
 		</div>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />
