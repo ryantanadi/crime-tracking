@@ -15,6 +15,14 @@
       document.getElementById("phone_contact").value = "";
       document.getElementById("status").value = "";
     }
+
+	function generateBadgeNumber() {
+      // Generate a random badge number between 1000 and 9999
+      const badgeNumber = Math.floor(Math.random() * 9000) + 1000;
+
+      // Set the value of the badge_number input field
+      document.getElementById("badge_number").value = badgeNumber;
+    }
   </script>
 <script>function lti_launch( vars, target ) {
 						var query = '';
@@ -79,11 +87,25 @@
   <div>  
 	<h1>New Officer Entry Form</h1>
 	<form action="new_officer.php" method="post">
-		Badge Number: <input type="text" id="badge_number" name="badge_number" required><br>
-		Officer Name: <input type="text" id="officer_name" name="officer_name" required><br>
-		Precinct: <input type="text" id="precinct" name="precinct" required><br>
-		Phone Contact: <input type="text" id="phone_contact" name="phone_contact" required><br>
-		Status: <input type="text" id="status" name="status" required><br>
+		Badge Number: <button type="button" class="btn btn-secondary" onclick="generateBadgeNumber()">Generate</button>
+		<div class="input-group">
+			<input type="text" id="badge_number" name="badge_number" required><br> 		</div>
+		Officer Name: 
+		<div class="input-group">
+			<input type="text" id="officer_name" name="officer_name" required><br>
+		</div>
+		Precinct: 
+		<div class="input-group">
+			<input type="text" id="precinct" name="precinct" required><br>
+		</div>
+		Phone Contact: 
+		<div class="input-group">
+			<input type="text" id="phone_contact" name="phone_contact" required><br>
+		</div>
+		Status: 
+		<div class="input-group">
+			<input type="text" id="status" name="status" required><br>
+		</div>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />
     </form>
