@@ -8,7 +8,7 @@
 	$status = $_POST['status'];
 
     // check if badge number is unique
-    $sql = "SELECT COUNT(*) as count FROM officer_info WHERE badge_number = '$badge_number'";
+    $sql = "SELECT COUNT(*) as count FROM Officer WHERE badge_number = '$badge_number'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($row['count'] > 0) {
