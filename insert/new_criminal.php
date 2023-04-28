@@ -17,7 +17,8 @@
     if ($row['count'] > 0) {
         // criminal ID already exists, display error message
         echo "Error: Criminal ID already exists.";
-    } else {
+    } 
+    else {
         // criminal ID is unique, insert new criminal record
         $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias)
         values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias')";
