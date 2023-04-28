@@ -9,14 +9,11 @@
   <link rel="stylesheet" href="activity-styles.css" /> 
   <script>
     function clearFields() {
-      document.getElementById("criminal_id").value = "";
-      document.getElementById("criminal_name").value = "";
-      document.getElementById("phone_num").value = "";
-      document.getElementById("address").value = "";
-      document.getElementById("violent_off_status").value = "";
-      document.getElementById("probation_status").value = "";
-      document.getElementById("alias").value = "";
-//      document.getElementById("crime_id").value = "";
+		const inputs = ["criminal_id", "criminal_name", "phone_num", "address", 
+		"violent_off_status", "probation_status", "alias", "crime_id"];
+		inputs.forEach(col => {
+			document.getElementById(col).value = "";
+		});
     }
 
 	function generateCriminalID() {
@@ -108,20 +105,28 @@
 		</div>
 		Violent Offender Status: 
 		<div class="input-group">
-			<input type="text" id="violent_off_status" name="violent_off_status" required><br>
+			<select id="violent_off_status" name="violent_off_status" required>
+				<option value="" selected disabled>Select</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select>
 		</div>
 		Probation Status: 
 		<div class="input-group">
-			<input type="text" id="probation_status" name="probation_status" required><br>
+			<select id="probation_status" name="probation_status" required>
+				<option value="" selected disabled>Select</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select>
 		</div>
 		Alias: 
 		<div class="input-group">
 			<input type="text" id="alias" name="alias" required><br>
 		</div>
-		<!-- Crime ID: 
+		Crime ID: 
 		<div class="input-group">
 			<input type="text" id="crime_id" name="crime_id" required><br>
-		</div> -->
+		</div>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />
     </form>

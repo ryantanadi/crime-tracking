@@ -20,10 +20,8 @@
     } 
     else {
         // criminal ID is unique, insert new criminal record
-        $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias)
-        values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias')";
-        // $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias, crime_id)
-        // values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias','$crime_id')";
+        $sql = "INSERT INTO Criminals (criminal_id, criminal_name, phone_num, address, violent_off_status, probation_status, alias, crime_id)
+        values('$criminal_id','$criminal_name','$phone_num','$address','$violent_off_status','$probation_status','$alias','$crime_id')";
         $result = mysqli_query($conn, $sql);
         if($result){
             echo $criminal_name. " entered successfully!";

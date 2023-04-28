@@ -9,11 +9,10 @@
   <link rel="stylesheet" href="activity-styles.css" /> 
   <script>
     function clearFields() {
-      document.getElementById("badge_number").value = "";
-      document.getElementById("officer_name").value = "";
-      document.getElementById("precinct").value = "";
-      document.getElementById("phone_contact").value = "";
-      document.getElementById("status").value = "";
+		const inputs = ["badge_number", "officer_name", "precinct", "phone_contact", "status"];
+		inputs.forEach(col => {
+			document.getElementById(col).value = "";
+		});
     }
 
 	function generateBadgeNumber() {

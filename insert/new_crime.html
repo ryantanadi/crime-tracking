@@ -9,19 +9,12 @@
   <link rel="stylesheet" href="activity-styles.css" /> 
   <script>
     function clearFields() {
-      document.getElementById("crime_id").value = "";
-      document.getElementById("date_charged").value = "";
-      document.getElementById("classification").value = "";
-      document.getElementById("crime_code").value = "";
-      document.getElementById("appeal_status").value = "";
-	  document.getElementById("hearing_date").value = "";
-      document.getElementById("arresting_officer_badge").value = "";
-      document.getElementById("appeal_cutoff_date").value = "";
-      document.getElementById("fine_amount").value = "";
-      document.getElementById("court_fee").value = "";
-	  document.getElementById("amount_paid").value = "";
-	  document.getElementById("payment_due").value = "";
-	  document.getElementById("charge_status").value = "";
+		const inputs = ["crime_id", "date_charged", "classification", "crime_code", 
+		"appeal_status", "hearing_date", "arresting_officer_badge", "appeal_cutoff_date", 
+		"fine_amount", "court_fee", "amount_paid", "payment_due", "charge_status"];
+		inputs.forEach(col => {
+			document.getElementById(col).value = "";
+		});
     }
 
 	function generateCrimeID() {
@@ -92,18 +85,6 @@
 					}
 				});</script></head>
 
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-document.getElementById("").value = "";
-
 <body>  
   <div>  
 	<h1>New Crime Entry Form</h1>
@@ -114,7 +95,7 @@ document.getElementById("").value = "";
 		</div>
 		Date Charged: 
 		<div class="input-group">
-			<input type="text" id="date_charged" name="date_charged" required><br>
+			<input type="date" id="date_charged" name="date_charged" required><br>
 		</div>
 		Classification: 
 		<div class="input-group">
@@ -122,43 +103,39 @@ document.getElementById("").value = "";
 		</div>
 		Crime Code: 
 		<div class="input-group">
-			<input type="tel" id="crime_code" name="crime_code" required><br>
+			<input type="number" id="crime_code" name="crime_code" required><br>
 		</div>
 		Appeal Status: 
 		<div class="input-group">
-			<select id="appeal_status" name="appeal_status" required>
-				<option value="" selected disabled>Select Status</option>
-				<option value="Active">Active</option>
-				<option value="Inactive">Inactive</option>
-			  </select>
+			<input type="text" id="appeal_status" name="appeal_status" required><br>
 		</div>
 		Hearing Date: 
 		<div class="input-group">
-			<input type="tel" id="hearing_date" name="hearing_date" required><br>
+			<input type="date" id="hearing_date" name="hearing_date" required><br>
 		</div>
 		Arresting Officer Badge: 
 		<div class="input-group">
-			<input type="tel" id="arresting_officer_badge" name="arresting_officer_badge" required><br>
+			<input type="number" id="arresting_officer_badge" name="arresting_officer_badge" required><br>
 		</div>
 		Appeal Cutoff Date: 
 		<div class="input-group">
-			<input type="tel" id="appeal_cutoff_date" name="appeal_cutoff_date" required><br>
+			<input type="date" id="appeal_cutoff_date" name="appeal_cutoff_date" required><br>
 		</div>
 		Fine Amount: 
 		<div class="input-group">
-			<input type="tel" id="fine_amount" name="fine_amount" required><br>
+			<input type="number" id="fine_amount" name="fine_amount" required><br>
 		</div>
 		Court Fee: 
 		<div class="input-group">
-			<input type="tel" id="court_fee" name="court_fee" required><br>
+			<input type="number" id="court_fee" name="court_fee" required><br>
 		</div>
 		Amount Paid: 
 		<div class="input-group">
-			<input type="tel" id="amount_paid" name="amount_paid" required><br>
+			<input type="number" id="amount_paid" name="amount_paid" required><br>
 		</div>
 		Payment Due: 
 		<div class="input-group">
-			<input type="tel" id="payment_due" name="payment_due" required><br>
+			<input type="date" id="payment_due" name="payment_due" required><br>
 		</div>
 		Charge Status: 
 		<div class="input-group">
