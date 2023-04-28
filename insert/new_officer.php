@@ -14,7 +14,8 @@
     if ($row['count'] > 0) {
         // badge number already exists, display error message
         echo "Error: Badge number already exists.";
-    } else {
+    } 
+    else {
         // badge number is unique, insert new officer record
         $sql = "INSERT INTO Officer (badge_number, officer_name, precinct, phone_contact, status)
         values('$badge_number','$officer_name','$precinct','$phone_contact','$status')";
