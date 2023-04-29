@@ -14,7 +14,7 @@
         echo "Error: Arrest ID already exists.";
     } 
     else {
-        // arrest ID is unique, insert new sentencing record
+        // arrest ID is unique, insert new arrest record
         $sql = "INSERT INTO Arrest_info(arrest_id, crime_id, badge_number) values('$arrest_id','$crime_id','$badge_number')";
         $result = mysqli_query($conn, $sql);
         if($result){
