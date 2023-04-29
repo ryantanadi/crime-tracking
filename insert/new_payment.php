@@ -6,7 +6,7 @@
 	$amount_paid = $_POST['amount_paid'];
 
     // check if payment ID is unique
-    $sql = "SELECT COUNT(*) as count FROM Payments WHERE payment_id = '$payment_id'";
+    $sql = "SELECT COUNT(*) as count FROM Payment WHERE payment_id = '$payment_id'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($row['count'] > 0) {
