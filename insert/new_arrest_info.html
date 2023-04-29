@@ -93,11 +93,27 @@
 		</div>
 		Crime ID: 
 		<div class="input-group">
-			<input type="number" id="crime_id" name="crime_id" min="0" required><br>
+			<select id="crime_id" name="crime_id" required>
+				<option value="" selected disabled>Select Crime ID</option>
+				<?php
+					$crime_ids = retrieve_crime_ids();
+					foreach ($crime_ids as $crime_id) {
+						echo '<option value="' . $crime_id . '">' . $crime_id . '</option>';
+					}
+ 			  	?>
+			 </select>
 		</div>
 		Arresting Officer's Badge Number: 
 		<div class="input-group">
-			<input type="number" id="badge_number" name="badge_number" min="0" required><br>
+			<select id="badge_number" name="badge_number" required>
+				<option value="" selected disabled>Select Badge Number</option>
+				<?php
+					$badge_numbers = retrieve_officer_ids();
+					foreach ($badge_numbers as $badge_number) {
+						echo '<option value="' . $badge_number . '">' . $badge_number . '</option>';
+					}
+ 			  	?>
+			 </select>
 		</div>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />

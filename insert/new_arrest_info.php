@@ -22,4 +22,33 @@
         }
         $conn->close();
     }
+    // Select all foreign key IDs from corresponding table for dropdown menu
+    function retrieve_crime_ids() {
+        global $conn;
+        $sql = "SELECT crime_id FROM Crimes";
+        $result = $conn->query($sql);
+        $crime_ids = array();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+               $crime_ids[] = $row["crime_id"];
+            }
+        }
+        $conn->close();
+        return $crime_ids;    
+    }
+
+    // Select all foreign key IDs from corresponding table for dropdown menu
+    function retrieve_officer_ids() {
+        global $conn;
+        $sql = "SELECT badge_number FROM Officers";
+        $result = $conn->query($sql);
+        $badge_numbers = array();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+               $badge_numbers[] = $row["badge_number"];
+            }
+        }
+        $conn->close();
+        return $badge_numbers;    
+    }
 ?>

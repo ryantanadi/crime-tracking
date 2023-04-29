@@ -25,6 +25,33 @@
       // Set the value of the crime_id input field
       document.getElementById("crime_id").value = crime_ID;
     }
+	// Makes sure that hearing date is after the charged date
+	function checkHearingDate() {
+		var dateCharged = new Date(document.getElementById("date_charged").value);
+		var hearingDate = new Date(document.getElementById("hearing_date").value);
+		if (dateCharged >= hearingDate) {
+			alert("Hearing date must be after date charged.");
+			document.getElementById("hearing_date").value = "";
+		}
+	}
+	// Makes sure that appeal cutoff date is after the hearing date
+	function checkCutoffDate() {
+		var cutoffDate = new Date(document.getElementById("appeal_cutoff_date").value);
+		var hearingDate = new Date(document.getElementById("hearing_date").value);
+		if (hearingDate >= cutoffDate) {
+			alert("Cutoff date must be after hearing date.");
+			document.getElementById("appeal_cutoff_date").value = "";
+		}
+	}
+	// Makes sure that payment date is after the cutoff date
+	function checkPaymentDate() {
+		var cutoffDate = new Date(document.getElementById("appeal_cutoff_date").value);
+		var paymentDate = new Date(document.getElementById("payment_date").value);
+		if (cutoffDate >= paymentDate) {
+			alert("Payment date must be after appeal cutoff date.");
+			document.getElementById("payment_date").value = "";
+		}
+	}
   </script>
 <script>function lti_launch( vars, target ) {
 						var query = '';
@@ -117,15 +144,23 @@
 		 </div>
 		Hearing Date: 
 		<div class="input-group">
-			<input type="date" id="hearing_date" name="hearing_date" required><br>
+			<input type="date" id="hearing_date" name="hearing_date" onblur="checkHearingDate()" required><br>
 		</div>
 		Arresting Officer Badge: 
 		<div class="input-group">
-			<input type="number" id="arresting_officer_badge" name="arresting_officer_badge" min="0" required><br>
+			<select id="badge_number" name="badge_number" required>
+				<option value="" selected disabled>Select Badge Number</option>
+				<?php
+					$badge_numbers = retrieve_officer_ids();
+					foreach ($badge_numbers as $badge_number) {
+						echo '<option value="' . $badge_number . '">' . $badge_number . '</option>';
+					}
+ 			  	?>
+			</select>
 		</div>
 		Appeal Cutoff Date: 
 		<div class="input-group">
-			<input type="date" id="appeal_cutoff_date" name="appeal_cutoff_date" required><br>
+			<input type="date" id="appeal_cutoff_date" name="appeal_cutoff_date" onblur="checkCutoffDate()" required><br>
 		</div>
 		Fine Amount: 
 		<div class="input-group">
@@ -141,7 +176,7 @@
 		</div>
 		Payment Due: 
 		<div class="input-group">
-			<input type="date" id="payment_due" name="payment_due" required><br>
+			<input type="date" id="payment_due" name="payment_due" onblur="checkPaymentDate()" required><br>
 		</div>
 		Charge Status: 
 		<div class="input-group">
