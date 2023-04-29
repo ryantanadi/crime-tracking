@@ -15,16 +15,16 @@
 	$payment_due = $_POST['payment_due'];
 	$charge_status = $_POST['charge_status'];
     
-    // check if badge number is unique
+    // check if crime ID number is unique
     $sql = "SELECT COUNT(*) as count FROM Crimes WHERE crime_id = '$crime_id'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($row['count'] > 0) {
-        // crime id already exists, display error message
+        // crime ID already exists, display error message
         echo "Error: Crime ID already exists.";
     } 
     else {
-        // badge number is unique, insert new officer record
+        // crime ID is unique, insert new criminal record
         $sql = "INSERT INTO Crimes (crime_id, date_charged, classification, crime_code, 
         appeal_status, hearing_date, arresting_officer_badge, appeal_cutoff_date, 
         fine_amount, court_fee, amount_paid, payment_due, charge_status)

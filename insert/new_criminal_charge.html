@@ -80,11 +80,11 @@
 	<form action="new_criminal_charge.php" method="post">
 		Criminal ID:
 		<div class="input-group">
-			<input type="number" id="criminal_id" name="criminal_id" required><br>
+			<input type="number" id="criminal_id" name="criminal_id" min="0" required><br>
 		</div>
 		Crime ID: 
 		<div class="input-group">
-			<input type="number" id="crime_id" name="crime_id" required><br>
+			<input type="number" id="crime_id" name="crime_id" min="0" required><br>
 		</div>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />

@@ -10,7 +10,7 @@
 	$alias = $_POST['alias'];
 	$crime_id = $_POST['crime_id'];
 
-    // check if badge number is unique
+    // check if criminal ID is unique
     $sql = "SELECT COUNT(*) as count FROM Criminals WHERE criminal_id = '$criminal_id'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
