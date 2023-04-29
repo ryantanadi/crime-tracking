@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Officer</title>
+  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Fetch data from officer.php and create table rows
+      $.getJSON('../php/officer.php', function(data) {
+        $.each(data, function(index, row) {
+          var tr = $('<tr>').appendTo('#officer-table');
+          $('<td>').text(row.badge_number).appendTo(tr);
+          $('<td>').text(row.officer_name).appendTo(tr);
+          $('<td>').text(row.precinct).appendTo(tr);
+          $('<td>').text(row.phone_contact).appendTo(tr);
+          $('<td>').text(row.status).appendTo(tr);
+          $('<td>').html('<button class="edit-button" data-badge-number="' + row.badge_number + '" data-officer-name="' + row.officer_name + '" data-precinct="' + row.precinct + '" data-phone-contact="' + row.phone_contact + '" data-status="' + row.status + '">Edit</button>').appendTo(tr);
+          $('<td>').html('<button class="delete-button" data-badge-number="' + row.badge_number + '">Delete</button>').appendTo(tr);
+        });
+      });
+      //search button
+      $('#search-button').click(function() {
+      var badgeNumber = $('#search-input').val();
+      $.ajax({
+        url: '../php/officer.php',
+        type: 'GET',
+        data: {
+          badge_number: badgeNumber
+        },
+        dataType: 'json',
+        success: function(data) {
+          // Clear the table rows
+          $('#officer-table tbody').empty();
+          // Add new table rows with the search results
+          $.each(data, function(index, row) {
+            var tr = $('<tr>').appendTo('#officer-table');
+            $('<td>').text(row.badge_number).appendTo(tr);
+            $('<td>').text(row.officer_name).appendTo(tr);
+            $('<td>').text(row.precinct).appendTo(tr);
+            $('<td>').text(row.phone_contact).appendTo(tr);
+            $('<td>').text(row.status).appendTo(tr);
+            $('<td>').html('<button class="edit-button" data-badge-number="' + row.badge_number + '" data-officer-name="' + row.officer_name + '" data-precinct="' + row.precinct + '" data-phone-contact="' + row.phone_contact + '" data-status="' + row.status + '">Edit</button>').appendTo(tr);
+            $('<td>').html('<button class="delete-button" data-badge-number="' + row.badge_number + '">Delete</button>').appendTo(tr);
+          });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Error: ' + textStatus + ' ' + errorThrown);
+        }
+      });
+    });
+    //delete button
+        $('#officer-table').on('click', '.delete-button', function() {
+      var badgeNumber = $(this).closest('tr').find('td:first-child').text();
+      if (confirm('Are you sure you want to delete officer ' + badgeNumber + '?')) {
+        // Send AJAX request to delete officer by badge number
+        $.ajax({
+          url: '../php/delete_officer.php',
+          type: 'POST',
+          data: { badge_number: badgeNumber },
+          dataType: 'json',
+          success: function(data) {
+            alert('Officer ' + badgeNumber + ' has been deleted.');
+            // Refresh officer table
+            location.reload();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+      }
+    });
+       //edit button
+            $('#officer-table').on('click', '.edit-button', function() {
+          // Get the data of the clicked row
+          var badgeNumber = $(this).data('badge-number');
+          var officerName = $(this).data('officer-name');
+          var precinct = $(this).data('precinct');
+          var phoneContact = $(this).data('phone-contact');
+          var status = $(this).data('status');
+
+          // Save the data to localStorage
+          localStorage.setItem('badgeNumber', badgeNumber);
+          localStorage.setItem('officerName', officerName);
+          localStorage.setItem('precinct', precinct);
+          localStorage.setItem('phoneContact', phoneContact);
+          localStorage.setItem('status', status);
+
+          // Redirect to edit_officer.html
+          window.location.href = 'edit_officer.html';
+      });
+
+
+
+
+    });
+
+
+  </script>
+</head>
+<body>
+
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Officer</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_officer.html'">Add New Officer</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Badge Number">
+    <button id="search-button">Search</button>
+  </div>
+  <table id="officer-table">
+    <thead>
+      <tr>
+        <th>Badge Number</th>
+        <th>Name</th>
+        <th>Precinct</th>
+        <th>Phone Contact</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>

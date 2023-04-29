@@ -37,18 +37,4 @@
         }
         $conn->close();
     }
-    // Select all foreign key IDs from corresponding table for dropdown menu
-    function retrieve_officer_ids() {
-        global $conn;
-        $sql = "SELECT badge_number FROM Officers";
-        $result = $conn->query($sql);
-        $badge_numbers = array();
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-            $badge_numbers[] = $row["badge_number"];
-            }
-        }
-        $conn->close();
-        return $badge_numbers;    
-    }
 ?>

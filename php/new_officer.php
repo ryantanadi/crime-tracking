@@ -1,5 +1,14 @@
 <?php
-    include "connect.php";
+    require('config.php');
+
+    // Connect to the database
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+
     // Get the values from the form
     $badge_number = $_POST['badge_number'];
 	$officer_name = $_POST['officer_name'];
@@ -21,7 +30,8 @@
         values('$badge_number','$officer_name','$precinct','$phone_contact','$status')";
         $result = mysqli_query($conn, $sql);
         if($result){
-            echo $officer_name. " entered successfully!";
+            $conn->close();
+            header("Location: new_officer.html");
         }
         $conn->close();
     }
