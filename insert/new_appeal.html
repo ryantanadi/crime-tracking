@@ -123,7 +123,15 @@
 		  </div>
 		  Crime ID: 
 		  <div class="input-group">
-			  <input type="number" id="crime_id" name="crime_id" min="0" required><br>
+			  <select id="crime_id" name="crime_id" required>
+				<option value="" selected disabled>Select Crime ID</option>
+				<?php
+					$crime_ids = retrieve_crime_ids();
+					foreach ($crime_ids as $crime_id) {
+						echo '<option value="' . $crime_id . '">' . $crime_id . '</option>';
+					}
+ 			  	?>
+			 </select>
 		  </div>
 		  <input type="submit" value="Submit" class="btn" />
 		  <input type="clear" value="Clear" onclick="clearFields()" class="btn" />
