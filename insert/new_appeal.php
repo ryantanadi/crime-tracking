@@ -27,7 +27,7 @@
         $conn->close();
     }
     // Select all foreign key IDs from corresponding table for dropdown menu
-    function retrieve_ids() {
+    function retrieve_crime_ids() {
         global $conn;
         $sql = "SELECT crime_id FROM Crimes";
         $result = $conn->query($sql);
