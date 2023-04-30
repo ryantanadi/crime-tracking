@@ -32,7 +32,7 @@
           $('#arrest-table tbody').empty();
           // Add new table rows with the search results
           $.each(data, function(index, row) {
-            var tr = $('<tr>').appendTo('#officer-table');
+            var tr = $('<tr>').appendTo('#arrest-table');
             $('<td>').text(row.arrest_id).appendTo(tr);
             $('<td>').text(row.crime_id).appendTo(tr);
             $('<td>').text(row.badge_number).appendTo(tr);
