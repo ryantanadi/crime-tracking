@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Payment</title>
-  <link rel="stylesheet" type="text/css" href="../css/payment.css">
+  <link rel="stylesheet" type="text/css" href="../css/officer.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -13,8 +13,8 @@
           $('<td>').text(row.payment_id).appendTo(tr);
           $('<td>').text(row.crime_id).appendTo(tr);
           $('<td>').text(row.amount_paid).appendTo(tr);
-          $('<td>').html('<button class="edit-button" data-payment-id="' + row.payment_id + '" data-crime-id="' + row.crime_id + '" data-amount-paid="' + row.amount_paid + '">Edit</button>').appendTo(tr);
-          $('<td>').html('<button class="delete-button" data-payment-id="' + row.payment_id + '">Delete</button>').appendTo(tr);
+          // $('<td>').html('<button class="edit-button" data-payment-id="' + row.payment_id + '" data-crime-id="' + row.crime_id + '" data-amount-paid="' + row.amount_paid + '">Edit</button>').appendTo(tr);
+          // $('<td>').html('<button class="delete-button" data-payment-id="' + row.payment_id + '">Delete</button>').appendTo(tr);
         });
       });
       //search button
@@ -36,8 +36,8 @@
             $('<td>').text(row.payment_id).appendTo(tr);
             $('<td>').text(row.crime_id).appendTo(tr);
             $('<td>').text(row.amount_paid).appendTo(tr);
-            $('<td>').html('<button class="edit-button" data-payment-id="' + row.payment_id + '" data-crime-id="' + row.crime_id + '" data-amount-paid="' + row.amount_paid + '">Edit</button>').appendTo(tr);
-            $('<td>').html('<button class="delete-button" data-payment-id="' + row.payment_id + '">Delete</button>').appendTo(tr);
+            // $('<td>').html('<button class="edit-button" data-payment-id="' + row.payment_id + '" data-crime-id="' + row.crime_id + '" data-amount-paid="' + row.amount_paid + '">Edit</button>').appendTo(tr);
+            // $('<td>').html('<button class="delete-button" data-payment-id="' + row.payment_id + '">Delete</button>').appendTo(tr);
           });
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -45,44 +45,38 @@
         }
       });
     });
-    //delete button
-        $('#payment-table').on('click', '.delete-button', function() {
-      var paymentID = $(this).closest('tr').find('td:first-child').text();
-      if (confirm('Are you sure you want to delete payment ' + paymentID + '?')) {
-        // Send AJAX request to delete payment by payment ID
-        $.ajax({
-          url: '../php/delete_payment.php',
-          type: 'POST',
-          data: { payment_id: paymentID },
-          dataType: 'json',
-          success: function(data) {
-            alert('Payment ' + paymentID + ' has been deleted.');
-            // Refresh payment table
-            location.reload();
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error: ' + textStatus + ' ' + errorThrown);
-          }
-        });
-      }
-    });
-       //edit button
-            $('#payment-table').on('click', '.edit-button', function() {
-          // Get the data of the clicked row
-          var paymentID = $(this).data('payment-id');
-          var crimeID = $(this).data('crime-id');
-          var amountPaid = $(this).data('amount-paid');
+     //download csv
+      document.getElementById("download-btn").onclick = function() {
 
-          // Save the data to localStorage
-          localStorage.setItem('paymentID', paymentID);
-          localStorage.setItem('crimeID', crimeID);
-          localStorage.setItem('amountPaid', amountPaid);
+            // Retrieve the table data
+            var table = document.getElementById("payment-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
 
-          // Redirect to edit_payment.html
-          window.location.href = 'edit_payment.html';
-      });
+            // Convert the data to CSV format
+            var csv = "";
 
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
 
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
 
 
     });
@@ -96,6 +90,7 @@
   <h1>Payment</h1>
   <div class="button-container">
     <button class="add-button" onclick="location.href='new_payment.html'">Add New Payment</button>
+    <button id="download-btn">Download CSV</button>
   </div>
    <div class="search-container">
     <input type="text" id="search-input" placeholder="Search by Payment ID">
@@ -107,8 +102,8 @@
         <th>Payment ID</th>
         <th>Crime ID</th>
         <th>Amount Paid</th>
-        <th>Edit</th>
-        <th>Delete</th>
+<!--        <th>Edit</th>-->
+<!--        <th>Delete</th>-->
       </tr>
     </thead>
     <tbody>

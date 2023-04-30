@@ -10,19 +10,18 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-// Get badge number from AJAX request
+// Get crime ID from AJAX request
 $crime_id = $_POST['crime_id'];
-$crime_code = $_POST['crime_code'];
 
 // Prepare and bind delete statement
-$stmt = $conn->prepare("DELETE FROM Charges WHERE crime_id=? AND crime_code=?");
-$stmt->bind_param("ii", $crime_id, $crime_code);
+$stmt = $conn->prepare("DELETE FROM Crimes WHERE crime_id=?");
+$stmt->bind_param("i", $crime_id);
 
 // Execute the delete statement
 if ($stmt->execute() === TRUE) {
-    $response = array('status' => 'success', 'message' => 'Charge deleted successfully');
+    $response = array('status' => 'success', 'message' => 'Crime deleted successfully');
 } else {
-    $response = array('status' => 'error', 'message' => 'Error deleting charge: ' . $conn->error);
+    $response = array('status' => 'error', 'message' => 'Error deleting crime: ' . $conn->error);
 }
 
 // Close connection and send response

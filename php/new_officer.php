@@ -31,7 +31,7 @@
         $result = mysqli_query($conn, $sql);
         if($result){
             $conn->close();
-            header("Location: new_officer.html");
+            header("Location: ../html/new_officer.html");
         }
         $conn->close();
     }

@@ -15,32 +15,69 @@
 	<form action="../php/update_arrest_info.php" method="post">
 		Arrest ID: 
 		<div class="input-group">
-			<input type="number" id="arrest_id" name="arrest_id" min="0" required><br>
+			<input type="number" id="arrest_id" name="arrest_id" min="0" readonly required><br>
 		</div>
 		Crime ID: 
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" class="form-control" required>
+			<select id="crime_id" name="crime_id" required>
 				<option value="" selected disabled>Select Crime ID</option>
-				<?php
-					$crime_ids = retrieve_crime_ids();
-					foreach ($crime_ids as $crime_id) {
-						echo '<option value="' . $crime_id . '">' . $crime_id . '</option>';
-					}
- 			  	?>
-			 </select>
+			</select>
 		</div>
-		Arresting Officer's Badge Number: 
+
+		<script>
+			// Make an AJAX request to retrieve the crime IDs
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var crimeIds = JSON.parse(this.responseText);
+					// Populate the select element with the crime IDs
+					var selectElement = document.getElementById("crime_id");
+					for (var i = 0; i < crimeIds.length; i++) {
+						var option = document.createElement("option");
+						option.value = crimeIds[i];
+						option.text = crimeIds[i];
+						selectElement.add(option);
+					}
+					var crimeID = localStorage.getItem('crimeID');
+					if (crimeID && crimeID.indexOf(crimeID) >= 0) {
+						selectElement.value = crimeID;
+					}
+				}
+			};
+			xhr.open("GET", "../php/get_crime_id.php", true);
+			xhr.send();
+		</script>
+		Arresting Officer's Badge Number:
 		<div class="input-group">
-			<select id="badge_number" name="badge_number" class="form-control" required>
-				<option value="" selected disabled>Select Badge Number</option>
-				<?php
-					$badge_numbers = retrieve_officer_ids();
-					foreach ($badge_numbers as $badge_number) {
-						echo '<option value="' . $badge_number . '">' . $badge_number . '</option>';
-					}
- 			  	?>
-			 </select>
+		  <select id="badge_number" name="badge_number" required>
+			<option value="" selected disabled>Select Badge Number</option>
+		  </select>
 		</div>
+
+		<script>
+		  // Make an AJAX request to retrieve the badge numbers
+		  var xhr = new XMLHttpRequest();
+		  xhr.onreadystatechange =
+				  function() {
+			if (this.readyState == 4 && this.status == 200) {
+			  var badgeNumbers = JSON.parse(this.responseText);
+			  // Populate the select element with the badge numbers
+			  var selectElement = document.getElementById("badge_number");
+			  for (var i = 0; i < badgeNumbers.length; i++) {
+				var option = document.createElement("option");
+				option.value = badgeNumbers[i];
+				option.text = badgeNumbers[i];
+				selectElement.add(option);
+			  }
+			  var badgeNumber = localStorage.getItem('badgeNumber');
+				if (badgeNumber && badgeNumbers.indexOf(badgeNumber) >= 0) {
+					selectElement.value = badgeNumber;
+				}
+			}
+		  };
+		  xhr.open("GET", "../php/get_badge_numbers.php", true);
+		  xhr.send();
+		</script>
 		<input type="submit" value="Save Changes" class="btn" />
     </form>
   </div>

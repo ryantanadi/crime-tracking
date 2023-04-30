@@ -78,31 +78,59 @@
 <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
   <div> 
 	<h1>New Charge Entry Form</h1>
-	<form action="../php/new_crime_code.php" method="post">
+	<form action="../php/new_charge.php" method="post">
 		Crime ID: 
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" class="form-control" required>
+			<select id="crime_id" name="crime_id" required>
 				<option value="" selected disabled>Select Crime ID</option>
-				<?php
-					$crime_ids = retrieve_crime_ids();
-					foreach ($crime_ids as $crime_id) {
-						echo '<option value="' . $crime_id . '">' . $crime_id . '</option>';
-					}
- 			  	?>
 			</select>
 		</div>
+
+		<script>
+			// Make an AJAX request to retrieve the crime IDs
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var crimeIds = JSON.parse(this.responseText);
+					// Populate the select element with the crime IDs
+					var selectElement = document.getElementById("crime_id");
+					for (var i = 0; i < crimeIds.length; i++) {
+						var option = document.createElement("option");
+						option.value = crimeIds[i];
+						option.text = crimeIds[i];
+						selectElement.add(option);
+					}
+				}
+			};
+			xhr.open("GET", "../php/get_crime_id.php", true);
+			xhr.send();
+		</script>
 		Crime Code:
+
 		<div class="input-group">
-			<select id="crime_code" name="crime_code" class="form-control" required>
+			<select id="crime_code" name="crime_code" required>
 				<option value="" selected disabled>Select Crime Code</option>
-				<?php
-					$crime_codes = retrieve_crime_codes();
-					foreach ($crime_codes as $crime_code) {
-						echo '<option value="' . $crime_code . '">' . $crime_code . '</option>';
-					}
- 			  	?>
 			</select>
 		</div>
+		<script>
+			// Make an AJAX request to retrieve the crime codes
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var crimeCodes = JSON.parse(this.responseText);
+					// Populate the select element with the crime codes
+					var selectElement = document.getElementById("crime_code");
+					for (var i = 0; i < crimeCodes.length; i++) {
+						var option = document.createElement("option");
+						option.value = crimeCodes[i];
+						option.text = crimeCodes[i];
+						selectElement.add(option);
+					}
+				}
+			};
+			xhr.open("GET", "../php/get_crime_codes.php", true);
+			xhr.send();
+		</script>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />
     </form>

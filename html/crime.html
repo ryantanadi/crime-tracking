@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crime</title>
+  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+
+      $(document).ready(function() {
+// Fetch data from crime.php and create table rows
+          $.getJSON('../php/crime.php', function (data) {
+              $.each(data, function (index, row) {
+                  var tr = $('<tr>').appendTo('#crime-table');
+                  $('<td>').text(row.crime_id).appendTo(tr);
+                  $('<td>').text(row.date_charged).appendTo(tr);
+                  $('<td>').text(row.classification).appendTo(tr);
+                  $('<td>').text(row.appeal_status).appendTo(tr);
+                  $('<td>').text(row.hearing_date).appendTo(tr);
+                  $('<td>').text(row.arresting_officer_badge).appendTo(tr);
+                  $('<td>').text(row.appeal_cutoff_date).appendTo(tr);
+                  $('<td>').text(row.fine_amount).appendTo(tr);
+                  $('<td>').text(row.court_fee).appendTo(tr);
+                  $('<td>').text(row.amount_paid).appendTo(tr);
+                  $('<td>').text(row.payment_due).appendTo(tr);
+                  $('<td>').text(row.charge_status).appendTo(tr);
+                  $('<td>').html('<button class="edit-button" data-crime-id="' + row.crime_id + '" data-date-charged="' + row.date_charged + '" data-classification="' + row.classification + '" data-appeal-status="' + row.appeal_status + '" data-hearing-date="' + row.hearing_date + '" data-arresting-officer-badge="' + row.arresting_officer_badge + '" data-appeal-cutoff-date="' + row.appeal_cutoff_date + '" data-fine-amount="' + row.fine_amount + '" data-court-fee="' + row.court_fee + '" data-amount-paid="' + row.amount_paid + '" data-payment-due="' + row.payment_due + '" data-charge-status="' + row.charge_status + '">Edit</button>').appendTo(tr);
+                  $('<td>').html('<button class="delete-button" data-crime-id="' + row.crime_id + '">Delete</button>').appendTo(tr);
+              });
+          });
+          //search function on click
+        $('#search-button').click(function() {
+          var crimeCode = $('#search-input').val();
+          $.ajax({
+            url: '../php/crime.php',
+            type: 'GET',
+            data: {
+              crime_id: crimeCode
+            },
+            dataType: 'json',
+            success: function(data) {
+              // Clear the table rows
+              $('#crime-table tbody').empty();
+              // Add new table rows with the search results
+              $.each(data, function(index, row) {
+                var tr = $('<tr>').appendTo('#crime-table');
+                $('<td>').text(row.crime_id).appendTo(tr);
+                  $('<td>').text(row.date_charged).appendTo(tr);
+                  $('<td>').text(row.classification).appendTo(tr);
+                  $('<td>').text(row.appeal_status).appendTo(tr);
+                  $('<td>').text(row.hearing_date).appendTo(tr);
+                  $('<td>').text(row.arresting_officer_badge).appendTo(tr);
+                  $('<td>').text(row.appeal_cutoff_date).appendTo(tr);
+                  $('<td>').text(row.fine_amount).appendTo(tr);
+                  $('<td>').text(row.court_fee).appendTo(tr);
+                  $('<td>').text(row.amount_paid).appendTo(tr);
+                  $('<td>').text(row.payment_due).appendTo(tr);
+                  $('<td>').text(row.charge_status).appendTo(tr);
+                  $('<td>').html('<button class="edit-button" data-crime-id="' + row.crime_id + '" data-date-charged="' + row.date_charged + '" data-classification="' + row.classification + '" data-appeal-status="' + row.appeal_status + '" data-hearing-date="' + row.hearing_date + '" data-arresting-officer-badge="' + row.arresting_officer_badge + '" data-appeal-cutoff-date="' + row.appeal_cutoff_date + '" data-fine-amount="' + row.fine_amount + '" data-court-fee="' + row.court_fee + '" data-amount-paid="' + row.amount_paid + '" data-payment-due="' + row.payment_due + '" data-charge-status="' + row.charge_status + '">Edit</button>').appendTo(tr);
+                  $('<td>').html('<button class="delete-button" data-crime-id="' + row.crime_id + '">Delete</button>').appendTo(tr);
+              });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log('Error: ' + textStatus + ' ' + errorThrown);
+            }
+          });
+        });
+        //delete
+         $('#crime-table').on('click', '.delete-button', function() {
+          var crimeId = $(this).closest('tr').find('td:first-child').text();
+          if (confirm('Are you sure you want to delete crime ' + crimeId + '?')) {
+            // Send AJAX request to delete crime by crime_id
+            $.ajax({
+              url: '../php/delete_crime.php',
+              type: 'POST',
+              data: { crime_id: crimeId },
+              dataType: 'json',
+              success: function(data) {
+                alert('Crime ' + crimeId + ' has been deleted.');
+                // Refresh crime table
+                location.reload();
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Error: ' + textStatus + ' ' + errorThrown);
+              }
+            });
+          }
+        });
+        //edit button
+        $('#crime-table').on('click', '.edit-button', function() {
+          // Get the data of the clicked row
+          var crimeId = $(this).data('crime-id');
+          var dateCharged = $(this).data('date-charged');
+          var classification = $(this).data('classification');
+          var appealStatus = $(this).data('appeal-status');
+          var hearingDate = $(this).data('hearing-date');
+          var arrestingOfficerBadge = $(this).data('arresting-officer-badge');
+          var appealCutoffDate = $(this).data('appeal-cutoff-date');
+          var fineAmount = $(this).data('fine-amount');
+          var courtFee = $(this).data('court-fee');
+          var amountPaid = $(this).data('amount-paid');
+          var paymentDue = $(this).data('payment-due');
+          var chargeStatus = $(this).data('charge-status');
+
+          // Save the data to localStorage
+          localStorage.setItem('crimeId', crimeId);
+          localStorage.setItem('dateCharged', dateCharged);
+          localStorage.setItem('classification', classification);
+          localStorage.setItem('appealStatus', appealStatus);
+          localStorage.setItem('hearingDate', hearingDate);
+          localStorage.setItem('arrestingOfficerBadge', arrestingOfficerBadge);
+          localStorage.setItem('appealCutoffDate', appealCutoffDate);
+          localStorage.setItem('fineAmount', fineAmount);
+          localStorage.setItem('courtFee', courtFee);
+          localStorage.setItem('amountPaid', amountPaid);
+          localStorage.setItem('paymentDue', paymentDue);
+          localStorage.setItem('chargeStatus', chargeStatus);
+
+          //console.log(dateCharged);
+          //console.log(arrestingOfficerBadge);
+          // Redirect to edit_crime.html
+          window.location.href = 'edit_crime.html';
+      });
+         //download csv
+      document.getElementById("download-btn").onclick = function() {
+
+            // Retrieve the table data
+            var table = document.getElementById("crime-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
+
+            // Convert the data to CSV format
+            var csv = "";
+
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
+
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
+
+
+
+
+      });
+  </script>
+</head>
+<body>
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Crime</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_crime.html'">Add New Crime</button>
+    <button id="download-btn">Download CSV</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Crime ID">
+    <button id="search-button">Search</button>
+  </div>
+  <table id="crime-table">
+    <thead>
+      <tr>
+        <th>Crime ID</th>
+        <th>Date Charged</th>
+        <th>Classification</th>
+        <th>Appeal Status</th>
+        <th>Hearing Date</th>
+        <th>Arresting Officer Badge</th>
+        <th>Appeal Cutoff Date</th>
+        <th>Fine Amount</th>
+        <th>Court Fee</th>
+        <th>Amount Paid</th>
+        <th>Payment Due</th>
+        <th>Charge Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>

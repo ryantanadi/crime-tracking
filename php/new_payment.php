@@ -29,6 +29,8 @@
         $result = mysqli_query($conn, $sql);
         if($result){
             echo $payment_id. " made successfully!";
+            $conn->close();
+            header("Location: ../html/new_payment.html");
         }
         $conn->close();
     }

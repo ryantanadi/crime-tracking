@@ -81,28 +81,55 @@
 	<form action="../php/new_criminal_charge.php" method="post">
 		Criminal ID:
 		<div class="input-group">
-			<select id="criminal_id" name="criminal_id" class="form-control" required>
+			<select id="criminal_id" name="criminal_id" required>
 				<option value="" selected disabled>Select Criminal ID</option>
-				<?php
-					$criminal_ids = retrieve_criminal_ids();
-					foreach ($criminal_ids as $criminal_id) {
-						echo '<option value="' . $criminal_id . '">' . $criminal_id . '</option>';
-					}
- 			  	?>
 			</select>
 		</div>
+		<script>
+			// Make an AJAX request to retrieve the criminal IDs
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var criminalIds = JSON.parse(this.responseText);
+					// Populate the select element with the criminal IDs
+					var selectElement = document.getElementById("criminal_id");
+					for (var i = 0; i < criminalIds.length; i++) {
+						var option = document.createElement("option");
+						option.value = criminalIds[i];
+						option.text = criminalIds[i];
+						selectElement.add(option);
+					}
+				}
+			};
+			xhr.open("GET", "../php/get_criminal_id.php", true);
+			xhr.send();
+		</script>
 		Crime ID: 
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" class="form-control" required>
+			<select id="crime_id" name="crime_id" required>
 				<option value="" selected disabled>Select Crime ID</option>
-				<?php
-					$crime_ids = retrieve_crime_ids();
-					foreach ($crime_ids as $crime_id) {
-						echo '<option value="' . $crime_id . '">' . $crime_id . '</option>';
-					}
- 			  	?>
 			</select>
 		</div>
+
+		<script>
+			// Make an AJAX request to retrieve the crime IDs
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var crimeIds = JSON.parse(this.responseText);
+					// Populate the select element with the crime IDs
+					var selectElement = document.getElementById("crime_id");
+					for (var i = 0; i < crimeIds.length; i++) {
+						var option = document.createElement("option");
+						option.value = crimeIds[i];
+						option.text = crimeIds[i];
+						selectElement.add(option);
+					}
+				}
+			};
+			xhr.open("GET", "../php/get_crime_id.php", true);
+			xhr.send();
+		</script>
 		<input type="submit" value="Submit" class="btn" />
 		<input type="clear" value="Clear" onclick="clearFields()" class="btn" />
     </form>

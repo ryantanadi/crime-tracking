@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Arrest Info</title>
-  <link rel="stylesheet" type="text/css" href="../css/arrest_info.css">
+  <link rel="stylesheet" type="text/css" href="../css/office.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -69,9 +69,9 @@
        //edit button
             $('#arrest-table').on('click', '.edit-button', function() {
           // Get the data of the clicked row
-          var arrestID = $(this).data('arrest_id');
-          var crimeID = $(this).data('crime_id');
-          var badgeNumber = $(this).data('badge_number');
+          var arrestID = $(this).data('arrest-id');
+          var crimeID = $(this).data('crime-id');
+          var badgeNumber = $(this).data('badge-number');
 
           // Save the data to localStorage
           localStorage.setItem('arrestID', arrestID);
@@ -82,7 +82,38 @@
           window.location.href = 'edit_arrest_info.html';
       });
 
+     //download csv
+      document.getElementById("download-btn").onclick = function() {
 
+            // Retrieve the table data
+            var table = document.getElementById("arrest-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
+
+            // Convert the data to CSV format
+            var csv = "";
+
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
+
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
 
 
     });
@@ -96,6 +127,7 @@
   <h1>Arrest Info</h1>
   <div class="button-container">
     <button class="add-button" onclick="location.href='new_arrest_info.html'">Add New Arrest Info</button>
+    <button id="download-btn">Download CSV</button>
   </div>
    <div class="search-container">
     <input type="text" id="search-input" placeholder="Search by Arrest ID">

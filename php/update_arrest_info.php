@@ -17,7 +17,7 @@ $badge_number = $_POST['badge_number'];
 
 // Prepare and bind update statement
 $stmt = $conn->prepare("UPDATE Arrest_info SET crime_id=?, badge_number=? WHERE arrest_id=?");
-$stmt->bind_param("ssssi", $crime_id, $badge_number, $arrest_id);
+$stmt->bind_param("iii", $crime_id, $badge_number, $arrest_id);
 
 // Execute the update statement
 if ($stmt->execute() === TRUE) {

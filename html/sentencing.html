@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sentencing</title>
+  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        //getting all the data
+          $.getJSON('../php/sentencing.php', function (data) {
+              $.each(data, function (index, row) {
+                var tr = $('<tr>').appendTo('#sentencing-table');
+                 $('<td>').text(row.sentencing_id).appendTo(tr);
+              $('<td>').text(row.start_date).appendTo(tr);
+              $('<td>').text(row.end_date).appendTo(tr);
+              $('<td>').text(row.sentence_type).appendTo(tr);
+              $('<td>').text(row.num_violations).appendTo(tr);
+              $('<td>').text(row.criminal_id).appendTo(tr);
+              $('<td>').html('<button class="edit-button" data-sentencing-id="' + row.sentencing_id + '" data-start-date="' + row.start_date + '" data-end-date="' + row.end_date + '" data-sentence-type="' + row.sentence_type + '" data-num-violations="' + row.num_violations + '" data-criminal-id="' + row.criminal_id + '">Edit</button>').appendTo(tr);
+              $('<td>').html('<button class="delete-button" data-sentencing-id="' + row.sentencing_id + '">Delete</button>').appendTo(tr);
+              });
+            });
+
+          //search
+      $('#search-button').click(function() {
+        var sentencing_id = $('#search-input').val();
+        $.ajax({
+          url: '../php/sentencing.php',
+          type: 'GET',
+          data: {
+            sentencing_id: sentencing_id
+          },
+          dataType: 'json',
+          success: function(data) {
+            $('#sentencing-table tbody').empty();
+            $.each(data, function(index, row) {
+              var tr = $('<tr>').appendTo('#sentencing-table');
+              $('<td>').text(row.sentencing_id).appendTo(tr);
+              $('<td>').text(row.start_date).appendTo(tr);
+              $('<td>').text(row.end_date).appendTo(tr);
+              $('<td>').text(row.sentence_type).appendTo(tr);
+              $('<td>').text(row.num_violations).appendTo(tr);
+              $('<td>').text(row.criminal_id).appendTo(tr);
+              $('<td>').html('<button class="edit-button" data-sentencing-id="' + row.sentencing_id + '" data-start-date="' + row.start_date + '" data-end-date="' + row.end_date + '" data-sentence-type="' + row.sentence_type + '" data-num-violations="' + row.num_violations + '" data-criminal-id="' + row.criminal_id + '">Edit</button>').appendTo(tr);
+              $('<td>').html('<button class="delete-button" data-sentencing-id="' + row.sentencing_id + '">Delete</button>').appendTo(tr);
+            });
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+      });
+
+      //delete
+      $('#sentencing-table').on('click', '.delete-button', function() {
+          var sentencingId = $(this).closest('tr').find('td:first-child').text();
+          if (confirm('Are you sure you want to delete sentencing ' + sentencingId + '?')) {
+              // Send AJAX request to delete sentencing by sentencing_id
+              $.ajax({
+                  url: '../php/delete_sentencing.php',
+                  type: 'POST',
+                  data: { sentencing_id: sentencingId },
+                  dataType: 'json',
+                  success: function(data) {
+                      alert('Sentencing ' + sentencingId + ' has been deleted.');
+                      // Refresh sentencing table
+                      location.reload();
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.log('Error: ' + textStatus + ' ' + errorThrown);
+                  }
+              });
+          }
+      });
+      // edit button
+      $('#sentencing-table').on('click', '.edit-button', function() {
+          // Get the data of the clicked row
+          var sentencingId = $(this).data('sentencing-id');
+          var startDate = $(this).data('start-date');
+          var endDate = $(this).data('end-date');
+          var sentenceType = $(this).data('sentence-type');
+          var numViolations = $(this).data('num-violations');
+          var criminalId = $(this).data('criminal-id');
+
+          // Save the data to localStorage
+          localStorage.setItem('sentencingId', sentencingId);
+          localStorage.setItem('startDate', startDate);
+          localStorage.setItem('endDate', endDate);
+          localStorage.setItem('sentenceType', sentenceType);
+          localStorage.setItem('numViolations', numViolations);
+          localStorage.setItem('criminalId', criminalId);
+
+          // Redirect to edit_sentencing.html
+          window.location.href = 'edit_sentencing.html';
+      });
+       //download csv
+      document.getElementById("download-btn").onclick = function() {
+
+            // Retrieve the table data
+            var table = document.getElementById("sentencing-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
+
+            // Convert the data to CSV format
+            var csv = "";
+
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
+
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
+
+
+
+    });
+    </script>
+</head>
+<body>
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Sentencing</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_sentencing.html'">Add New Sentencing</button>
+    <button id="download-btn">Download CSV</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Sentencing ID">
+    <button id="search-button">Search</button>
+  </div>
+  <table id="sentencing-table">
+    <thead>
+      <tr>
+        <th>Sentencing ID</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Sentence Type</th>
+        <th>Number of Violations</th>
+        <th>Criminal ID</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>

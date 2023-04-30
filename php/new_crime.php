@@ -13,10 +13,9 @@
     $crime_id = $_POST['crime_id'];
 	$date_charged = $_POST['date_charged'];
 	$classification = $_POST['classification'];
-	$crime_code = $_POST['crime_code'];
 	$appeal_status = $_POST['appeal_status'];
     $hearing_date = $_POST['hearing_date'];
-	$arresting_officer_badge = $_POST['arresting_officer_badge'];
+	$arresting_officer_badge = $_POST['badge_number'];
     $appeal_cutoff_date = $_POST['appeal_cutoff_date'];
 	$fine_amount = $_POST['fine_amount'];
 	$court_fee = $_POST['court_fee'];
@@ -34,15 +33,17 @@
     } 
     else {
         // crime ID is unique, insert new criminal record
-        $sql = "INSERT INTO Crimes (crime_id, date_charged, classification, crime_code, 
+        $sql = "INSERT INTO Crimes (crime_id, date_charged, classification,
         appeal_status, hearing_date, arresting_officer_badge, appeal_cutoff_date, 
         fine_amount, court_fee, amount_paid, payment_due, charge_status)
-        values('$crime_id', '$date_charged', '$classification', '$crime_code', '$appeal_status', 
+        values('$crime_id', '$date_charged', '$classification',  '$appeal_status',
         '$hearing_date', '$arresting_officer_badge', '$appeal_cutoff_date', '$fine_amount', 
         '$court_fee', '$amount_paid', '$payment_due', '$charge_status')";
         $result = mysqli_query($conn, $sql);
         if($result){
             echo $crime_id. " entered successfully!";
+            $conn->close();
+            header("Location: ../html/new_crime.html");
         }
         $conn->close();
     }

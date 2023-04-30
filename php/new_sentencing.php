@@ -32,6 +32,8 @@
         $result = mysqli_query($conn, $sql);
         if($result){
             echo $sentencing_id. " entered successfully!";
+             $conn->close();
+            header("Location: ../html/new_sentencing.html");
         }
         $conn->close();
     }

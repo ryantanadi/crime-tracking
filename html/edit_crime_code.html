@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">   
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">  
-  <title>Payment Registration</title> 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crime Code Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/activity-styles.css" />
   <script>
-	// Clears all entries
+	// Clear all entries
     function clearFields() {
-		const inputs = ["payment_id", "crime_id", "amount_paid"];
+		const inputs = ["crime_code", "crime_name"];
 		inputs.forEach(col => {
 			document.getElementById(col).value = "";
 		});
     }
-	// Creates new random ID
-	function generatePaymentID() {
-		// Generate a random sentencing_id number between 1000 and 9999
-		const payment_id = Math.floor(Math.random() * 9000) + 1000;
+	// Create random ID
+	function generateCrimeCode() {
+		// Generate a number between 1000 and 9999
+		const crime_code = Math.floor(Math.random() * 9000) + 1000;
 
-		// Set the value of the sentencing_id input field
-		document.getElementById("payment_id").value = payment_id;
+		// Set the value of the crime code input field
+		document.getElementById("crime_code").value = crime_code;
     }
   </script>
 <script>function lti_launch( vars, target ) {
@@ -52,7 +52,7 @@
 					document.querySelectorAll('.d2l-code').forEach(code => {
 						window.D2L.Prism.formatCodeElement(code);
 					});
-				});</script><script>window.addEventListener('message', function(event) { 
+				});</script><script>window.addEventListener('message', function(event) {
 					if( !event.data ) {
 						return;
 					}
@@ -82,52 +82,35 @@
 							console.info( 'Setting iFrame width to 100%' );
 						}
 					}
-				});</script></head>  
+				});</script></head>
 <body>
 <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
-	<div>
-		<h1>New Payment Form</h1>
-		<form action="../php/new_payment.php" method="post">
-			Payment ID: <button type="button" class="btn btn-secondary btn-sm" onclick="generatePaymentID()">Generate</button>
-			<div class="input-group">
-				<input type="number" id="payment_id" name="payment_id" min="0" required><br>
-			</div>
-			Crime ID: 
-			<div class="input-group">
-			<select id="crime_id" name="crime_id" required>
-				<option value="" selected disabled>Select Crime ID</option>
-			</select>
+  <div>
+	<h1>New Crime Code Entry Form</h1>
+	<form action="../php/update_crime_code.php" method="post">
+		<div class="input-group">
+			<input type="number" id="crime_code" name="crime_code" min="0" readonly required><br>
 		</div>
-
-		<script>
-			// Make an AJAX request to retrieve the crime IDs
-			var xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					var crimeIds = JSON.parse(this.responseText);
-					// Populate the select element with the crime IDs
-					var selectElement = document.getElementById("crime_id");
-					for (var i = 0; i < crimeIds.length; i++) {
-						var option = document.createElement("option");
-						option.value = crimeIds[i];
-						option.text = crimeIds[i];
-						selectElement.add(option);
-					}
-				}
-			};
-			xhr.open("GET", "../php/get_crime_id.php", true);
-			xhr.send();
-		</script>
-			Amount Paid: 
-			<div class="input-group">
-				<input type="number" id="amount_paid" name="amount_paid" step="0.01" min="0" required><br>
-			</div>
-			<input type="submit" value="Submit" class="btn" />
-			<input type="clear" value="Clear" onclick="clearFields()" class="btn" />
-		</form>
-	</div>
+		Crime Name:
+		<div class="input-group">
+			<input type="text" id="crime_name" name="crime_name" required><br>
+		</div>
+		<input type="submit" value="Submit" class="btn" />
+    </form>
+  </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // Retrieve query parameters from URL
+  	var crimeCode = localStorage.getItem('crimeCode');
+	var crimeName = localStorage.getItem('crimeName');
+
+	// Set input field values
+	$('#crime_code').val(crimeCode);
+	$('#crime_name').val(crimeName);
+
+</script>
 </body>
 </html>

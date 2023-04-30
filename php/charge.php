@@ -9,15 +9,16 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-if (isset($_GET['crime_id']) && $_GET['crime_id'] != "") {
-  // Retrieve the search parameter
-  $badge_number = mysqli_real_escape_string($conn, $_GET['crime_id']);
+// Retrieve charges by crime ID or crime code
+if ((isset($_GET['crime_id']) && $_GET['crime_id'] != "") || (isset($_GET['crime_code']) && $_GET['crime_code'] != "")) {
+  // Retrieve the search parameters
+  $crime_id = mysqli_real_escape_string($conn, $_GET['crime_id']);
+  $crime_code = mysqli_real_escape_string($conn, $_GET['crime_code']);
 
-  // Call the stored procedure
-  $stmt = mysqli_prepare($conn, "CALL search_charge_by_crimeID(?)");
-  mysqli_stmt_bind_param($stmt, 's', $crime_id);
-  mysqli_stmt_execute($stmt);
-  $result = mysqli_stmt_get_result($stmt);
+  // SQL query to retrieve charges
+  $sql = "SELECT * FROM Charges WHERE crime_id = $crime_id AND crime_code = $crime_code";
+
+  $result = mysqli_query($conn, $sql);
 
   // Prepare data in JSON format
   $data = array();
@@ -26,10 +27,9 @@ if (isset($_GET['crime_id']) && $_GET['crime_id'] != "") {
       $data[] = $row;
     }
   }
-
 } else {
   // Fetch data from Charge table
-  $sql = "SELECT * FROM Charge";
+  $sql = "SELECT * FROM Charges";
   $result = $conn->query($sql);
 
   // Prepare data in JSON format

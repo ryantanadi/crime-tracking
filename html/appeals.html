@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Appeals</title>
+  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Fetch data from officer.php and create table rows
+      $.getJSON('../php/appeal.php', function(data) {
+        $.each(data, function(index, row) {
+          var tr = $('<tr>').appendTo('#appeal-table');
+          $('<td>').text(row.appeal_id).appendTo(tr);
+          $('<td>').text(row.appeal_status).appendTo(tr);
+          $('<td>').text(row.hearing_date).appendTo(tr);
+          $('<td>').text(row.filing_date).appendTo(tr);
+          $('<td>').text(row.appeal_count).appendTo(tr);
+          $('<td>').text(row.crime_id).appendTo(tr);
+          $('<td>').html('<button class="edit-button" data-appeal-id="' + row.appeal_id + '" data-appeal-status="' + row.appeal_status + '" data-hearing-date="' + row.hearing_date + '" data-filing-date="' + row.filing_date + '" data-appeal-count="' + row.appeal_count + '" data-crime-id="' + row.crime_id + '">Edit</button>').appendTo(tr);
+          $('<td>').html('<button class="delete-button" data-appeal-id="' + row.appeal_id + '">Delete</button>').appendTo(tr);
+        });
+      });
+      //search button
+      $('#search-button').click(function() {
+      var appealID = $('#search-input').val();
+      $.ajax({
+        url: '../php/appeal.php',
+        type: 'GET',
+        data: {
+          appeal_id: appealID
+        },
+        dataType: 'json',
+        success: function(data) {
+          // Clear the table rows
+          $('#appeal-table tbody').empty();
+          // Add new table rows with the search results
+          $.each(data, function(index, row) {
+            var tr = $('<tr>').appendTo('#appeal-table');
+            $('<td>').text(row.appeal_id).appendTo(tr);
+            $('<td>').text(row.appeal_status).appendTo(tr);
+            $('<td>').text(row.hearing_date).appendTo(tr);
+            $('<td>').text(row.filing_date).appendTo(tr);
+            $('<td>').text(row.appeal_count).appendTo(tr);
+            $('<td>').text(row.crime_id).appendTo(tr);
+            $('<td>').html('<button class="edit-button" data-appeal-id="' + row.appeal_id + '" data-appeal-status="' + row.appeal_status + '" data-hearing-date="' + row.hearing_date + '" data-filing-date="' + row.filing_date + '" data-appeal-count="' + row.appeal_count + '" data-crime-id="' + row.crime_id + '">Edit</button>').appendTo(tr);
+            $('<td>').html('<button class="delete-button" data-appeal-id="' + row.appeal_id + '">Delete</button>').appendTo(tr);
+          });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Error: ' + textStatus + ' ' + errorThrown);
+        }
+      });
+    });
+    //delete button
+        $('#appeal-table').on('click', '.delete-button', function() {
+      var appealID = $(this).closest('tr').find('td:first-child').text();
+      if (confirm('Are you sure you want to delete Appeal ' + appealID + '?')) {
+        // Send AJAX request to delete officer by badge number
+        $.ajax({
+          url: '../php/delete_appeal.php',
+          type: 'POST',
+          data: { appeal_id: appealID },
+          dataType: 'json',
+          success: function(data) {
+            alert('Appeal ' + appealID + ' has been deleted.');
+            // Refresh officer table
+            location.reload();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+      }
+    });
+       //edit button
+            $('#appeal-table').on('click', '.edit-button', function() {
+          // Get the data of the clicked row
+          var appealID = $(this).data('appeal-id');
+          var appealStatus = $(this).data('appeal-status');
+          var hearingDate = $(this).data('hearing-date');
+          var filingDate = $(this).data('filing-date');
+          var appealCount = $(this).data('appeal-count');
+          var crimeID = $(this).data('crime-id');
+
+          // Save the data to localStorage
+          localStorage.setItem('appealID', appealID);
+          localStorage.setItem('appealStatus', appealStatus);
+          localStorage.setItem('hearingDate', hearingDate);
+          localStorage.setItem('filingDate', filingDate);
+          localStorage.setItem('appealCount', appealCount);
+          localStorage.setItem('crimeID', crimeID);
+
+          // Redirect to edit_officer.html
+          window.location.href = 'edit_appeal.html';
+      });
+       //download csv
+      document.getElementById("download-btn").onclick = function() {
+
+            // Retrieve the table data
+            var table = document.getElementById("appeal-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
+
+            // Convert the data to CSV format
+            var csv = "";
+
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
+
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
+
+
+
+    });
+
+
+  </script>
+</head>
+<body>
+
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Appeal</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_appeal.html'">Add New Appeal</button>
+    <button id="download-btn">Download CSV</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Appeal ID">
+    <button id="search-button">Search</button>
+  </div>
+  <table id="appeal-table">
+    <thead>
+      <tr>
+        <th>Appeal ID</th>
+        <th>Appeal Status</th>
+        <th>Hearing Date</th>
+        <th>Filing Date</th>
+        <th>Appeal Count</th>
+        <th>Crime ID</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>

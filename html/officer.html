@@ -89,6 +89,38 @@
           // Redirect to edit_officer.html
           window.location.href = 'edit_officer.html';
       });
+       //download csv
+      document.getElementById("download-btn").onclick = function() {
+
+            // Retrieve the table data
+            var table = document.getElementById("officer-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
+
+            // Convert the data to CSV format
+            var csv = "";
+
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
+
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
 
 
 
@@ -104,6 +136,8 @@
   <h1>Officer</h1>
   <div class="button-container">
     <button class="add-button" onclick="location.href='new_officer.html'">Add New Officer</button>
+    <button id="download-btn">Download CSV</button>
+
   </div>
    <div class="search-container">
     <input type="text" id="search-input" placeholder="Search by Badge Number">

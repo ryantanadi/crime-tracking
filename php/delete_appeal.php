@@ -11,18 +11,18 @@ if (!$conn) {
 }
 
 // Get badge number from AJAX request
-$crime_id = $_POST['crime_id'];
-$crime_code = $_POST['crime_code'];
+$appeal_id = $_POST['appeal_id'];
+
 
 // Prepare and bind delete statement
-$stmt = $conn->prepare("DELETE FROM Charges WHERE crime_id=? AND crime_code=?");
-$stmt->bind_param("ii", $crime_id, $crime_code);
+$stmt = $conn->prepare("DELETE FROM Appeals WHERE appeal_id=?");
+$stmt->bind_param("i", $appeal_id);
 
 // Execute the delete statement
 if ($stmt->execute() === TRUE) {
-    $response = array('status' => 'success', 'message' => 'Charge deleted successfully');
+    $response = array('status' => 'success', 'message' => 'Appeal deleted successfully');
 } else {
-    $response = array('status' => 'error', 'message' => 'Error deleting charge: ' . $conn->error);
+    $response = array('status' => 'error', 'message' => 'Error deleting appeal: ' . $conn->error);
 }
 
 // Close connection and send response

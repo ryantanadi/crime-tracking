@@ -27,6 +27,8 @@
         $result = mysqli_query($conn, $sql);
         if($result){
             echo $crime_code. " entered successfully!";
+            $conn->close();
+            header("Location: ../html/new_crime_code.html");
         }
         $conn->close();
     }

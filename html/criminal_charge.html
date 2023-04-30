@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Criminal Charge</title>
+  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Fetch data from officer.php and create table rows
+      $.getJSON('../php/criminal_charge.php', function(data) {
+        $.each(data, function(index, row) {
+          var tr = $('<tr>').appendTo('#criminal-charge-table');
+          $('<td>').text(row.criminal_id).appendTo(tr);
+          $('<td>').text(row.crime_id).appendTo(tr);
+          // $('<td>').html('<button class="edit-button" data-criminal-id="' + row.criminal_id + '" data-crime-id="' + row.crime_id + '">Edit</button>').appendTo(tr);
+          $('<td>').html('<button class="delete-button" data-criminal-id="' + row.criminal_id + '"data-crime-id="' + row.crime_id + '">Delete</button>').appendTo(tr);
+        });
+      });
+      $('#search-button').click(function() {
+     var criminalID = $('#criminal-id-input').val();
+    var crimeID = $('#crime-id-input').val();
+
+
+      if (!criminalID || !crimeID) {
+        alert("Please enter both a criminal ID and a crime ID to search.");
+        return;
+      }
+
+      $.ajax({
+        url: '../php/criminal_charge.php',
+        type: 'GET',
+        data: {
+          criminal_id: criminalID,
+          crime_id: crimeID
+        },
+        dataType: 'json',
+        success: function(data) {
+          // Clear the table rows
+          $('#criminal-charge-table tbody').empty();
+          // Add new table rows with the search results
+          $.each(data, function(index, row) {
+            var tr = $('<tr>').appendTo('#criminal-charge-table');
+            $('<td>').text(row.criminal_id).appendTo(tr);
+            $('<td>').text(row.crime_id).appendTo(tr);
+            // $('<td>').html('<button class="edit-button" data-criminal-id="' + row.criminal_id + '" data-crime-id="' + row.crime_id + '">Edit</button>').appendTo(tr);
+            $('<td>').html('<button class="delete-button" data-criminal-id="' + row.criminal_id + '"data-crime-id="' + row.crime_id + '">Delete</button>').appendTo(tr);
+          });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Error: ' + textStatus + ' ' + errorThrown);
+        }
+      });
+    });
+    //delete button
+      $('#criminal-charge-table').on('click', '.delete-button', function() {
+      var criminalID = $(this).data('criminal-id');
+      var crimeId = $(this).data('crime-id');
+
+      if (confirm('Are you sure you want to delete criminal charge ' + criminalID + ',' + crimeId + '?')) {
+        // Send AJAX request to delete officer by badge number
+        $.ajax({
+          url: '../php/delete_criminal_charge.php',
+          type: 'POST',
+          data: { criminal_id: criminalID, crime_id: crimeId},
+          dataType: 'json',
+          success: function(data) {
+            alert('Criminal Charge ' + criminalID + ',' + crimeId + ' has been deleted.');
+            // Refresh officer table
+            location.reload();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+      }
+    });
+       //download csv
+      document.getElementById("download-btn").onclick = function() {
+
+            // Retrieve the table data
+            var table = document.getElementById("criminal-charge-table");
+            var rows = table.querySelectorAll("tr");
+            var headers = table.querySelectorAll("th"); // get table headers
+
+            // Convert the data to CSV format
+            var csv = "";
+
+            // Add table headers to CSV
+            for (var i = 0; i < headers.length; i++) {
+              csv += headers[i].innerText + ",";
+            }
+            csv += "\n";
+
+            // Add table data to CSV
+            for (var i = 0; i < rows.length; i++) {
+              var cells = rows[i].querySelectorAll("td");
+              for (var j = 0; j < cells.length; j++) {
+                csv += cells[j].innerText + ",";
+              }
+              csv += "\n";
+            }
+
+            // Download the CSV file
+            var link = document.createElement("a");
+            link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv));
+            link.setAttribute("download", "table-data.csv");
+            link.click();
+          };
+
+    });
+
+
+  </script>
+</head>
+<body>
+
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Criminal Charge</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_criminal_charge.html'">Add New Criminal Charge</button>
+    <button id="download-btn">Download CSV</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="criminal-id-input" placeholder="Criminal ID" required>
+    <input type="text" id="crime-id-input" placeholder="Crime ID" required>
+    <button id="search-button">Search</button>
+  </div>
+  <table id="criminal-charge-table">
+    <thead>
+      <tr>
+        <th>Criminal ID</th>
+        <th>Crime ID</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -9,15 +9,16 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-if (isset($_GET['payment_id']) && $_GET['payment_id'] != "") {
-  // Retrieve the search parameter and prepare it as a statement
-  $payment_id = mysqli_real_escape_string($conn, $_GET['payment_id']);
-  $stmt = mysqli_prepare($conn, "SELECT * FROM Payment WHERE payment_id = ?");
-  mysqli_stmt_bind_param($stmt, 'i', $payment_id);
+if (isset($_GET['crime_code']) && $_GET['crime_code'] != "") {
+  // Retrieve the search parameter
+  $crime_code = mysqli_real_escape_string($conn, $_GET['crime_code']);
 
-  // Execute the statement and get the result
-  mysqli_stmt_execute($stmt);
-  $result = mysqli_stmt_get_result($stmt);
+  // Prepare and bind SELECT statement
+    $stmt = mysqli_prepare($conn, "SELECT * FROM Crime_codes WHERE crime_code = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $crime_code);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
 
   // Prepare data in JSON format
   $data = array();
@@ -28,8 +29,8 @@ if (isset($_GET['payment_id']) && $_GET['payment_id'] != "") {
   }
 
 } else {
-  // Fetch data from Payment table with a regular query
-  $sql = "SELECT * FROM Payment";
+  // Fetch data from Officer table
+  $sql = "SELECT * FROM Crime_codes";
   $result = $conn->query($sql);
 
   // Prepare data in JSON format

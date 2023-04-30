@@ -9,15 +9,14 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-if (isset($_GET['badge_number']) && $_GET['badge_number'] != "") {
+if (isset($_GET['arrest_id']) && $_GET['arrest_id'] != "") {
   // Retrieve the search parameter
-  $badge_number = mysqli_real_escape_string($conn, $_GET['badge_number']);
+  $arrest_id = mysqli_real_escape_string($conn, $_GET['arrest_id']);
 
-  // Call the stored procedure
-  $stmt = mysqli_prepare($conn, "CALL search_officer_by_badge(?)");
-  mysqli_stmt_bind_param($stmt, 's', $badge_number);
-  mysqli_stmt_execute($stmt);
-  $result = mysqli_stmt_get_result($stmt);
+  // SQL query to retrieve officer by badge number
+  $sql = "SELECT * FROM Arrest_info WHERE arrest_id = '$arrest_id'";
+
+  $result = mysqli_query($conn, $sql);
 
   // Prepare data in JSON format
   $data = array();
@@ -28,8 +27,8 @@ if (isset($_GET['badge_number']) && $_GET['badge_number'] != "") {
   }
 
 } else {
-  // Fetch data from Officer table
-  $sql = "SELECT * FROM Officer";
+  // Fetch data from Arrest_info table
+  $sql = "SELECT * FROM Arrest_info";
   $result = $conn->query($sql);
 
   // Prepare data in JSON format
