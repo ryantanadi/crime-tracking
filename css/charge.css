@@ -1,0 +1,108 @@
+/* General Styles */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.button-container {
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.button-container button {
+  background-color: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#charge-table {
+  margin-left: 220px;
+  /*width: 70%;*/
+  border-collapse: collapse;
+}
+
+#charge-table th,
+#charge-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #d4d4d4;
+}
+
+#charge-table th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#charge-table tr:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+.edit-button,
+.delete-button {
+  background-color: transparent;
+  border: none;
+  color: #007aff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  text-decoration: underline;
+}
+
+/* Pagination Styles */
+.pagination-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination-container select {
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.pagination-container .page-numbers {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-container .page-numbers span {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.pagination-container .page-numbers a {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #007aff;
+  border-radius: 5px;
+  color: #007aff;
+  text-decoration: none;
+}
+
+.pagination-container .page-numbers a.active {
+  background-color: #007aff;
+  color: #fff;
+}
