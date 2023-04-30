@@ -1,5 +1,14 @@
 <?php
-    include "connect.php";
+    require('config.php');
+
+    // Connect to the database
+    $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    
     // Get the values from the form
     $criminal_id = $_POST['criminal_id'];
 	$criminal_name = $_POST['criminal_name'];
