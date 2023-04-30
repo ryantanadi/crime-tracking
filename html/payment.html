@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment</title>
+  <link rel="stylesheet" type="text/css" href="../css/payment.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Fetch data from payment.php and create table rows
+      $.getJSON('../php/payment.php', function(data) {
+        $.each(data, function(index, row) {
+          var tr = $('<tr>').appendTo('#payment-table');
+          $('<td>').text(row.payment_id).appendTo(tr);
+          $('<td>').text(row.crime_id).appendTo(tr);
+          $('<td>').text(row.amount_paid).appendTo(tr);
+          $('<td>').html('<button class="edit-button" data-payment-id="' + row.payment_id + '" data-crime-id="' + row.crime_id + '" data-amount-paid="' + row.amount_paid + '">Edit</button>').appendTo(tr);
+          $('<td>').html('<button class="delete-button" data-payment-id="' + row.payment_id + '">Delete</button>').appendTo(tr);
+        });
+      });
+      //search button
+      $('#search-button').click(function() {
+      var paymentID = $('#search-input').val();
+      $.ajax({
+        url: '../php/payment.php',
+        type: 'GET',
+        data: {
+          payment_id: paymentID
+        },
+        dataType: 'json',
+        success: function(data) {
+          // Clear the table rows
+          $('#payment-table tbody').empty();
+          // Add new table rows with the search results
+          $.each(data, function(index, row) {
+            var tr = $('<tr>').appendTo('#payment-table');
+            $('<td>').text(row.payment_id).appendTo(tr);
+            $('<td>').text(row.crime_id).appendTo(tr);
+            $('<td>').text(row.amount_paid).appendTo(tr);
+            $('<td>').html('<button class="edit-button" data-payment-id="' + row.payment_id + '" data-crime-id="' + row.crime_id + '" data-amount-paid="' + row.amount_paid + '">Edit</button>').appendTo(tr);
+            $('<td>').html('<button class="delete-button" data-payment-id="' + row.payment_id + '">Delete</button>').appendTo(tr);
+          });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Error: ' + textStatus + ' ' + errorThrown);
+        }
+      });
+    });
+    //delete button
+        $('#payment-table').on('click', '.delete-button', function() {
+      var paymentID = $(this).closest('tr').find('td:first-child').text();
+      if (confirm('Are you sure you want to delete payment ' + paymentID + '?')) {
+        // Send AJAX request to delete payment by payment ID
+        $.ajax({
+          url: '../php/delete_payment.php',
+          type: 'POST',
+          data: { payment_id: paymentID },
+          dataType: 'json',
+          success: function(data) {
+            alert('Payment ' + paymentID + ' has been deleted.');
+            // Refresh payment table
+            location.reload();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+      }
+    });
+       //edit button
+            $('#payment-table').on('click', '.edit-button', function() {
+          // Get the data of the clicked row
+          var paymentID = $(this).data('payment-id');
+          var crimeID = $(this).data('crime-id');
+          var amountPaid = $(this).data('amount-paid');
+
+          // Save the data to localStorage
+          localStorage.setItem('paymentID', paymentID);
+          localStorage.setItem('crimeID', crimeID);
+          localStorage.setItem('amountPaid', amountPaid);
+
+          // Redirect to edit_payment.html
+          window.location.href = 'edit_payment.html';
+      });
+
+
+
+
+    });
+
+
+  </script>
+</head>
+<body>
+
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Payment</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_payment.html'">Add New Payment</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Payment ID">
+    <button id="search-button">Search</button>
+  </div>
+  <table id="payment-table">
+    <thead>
+      <tr>
+        <th>Payment ID</th>
+        <th>Crime ID</th>
+        <th>Amount Paid</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>
