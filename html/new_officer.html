@@ -88,7 +88,7 @@
 	<div>
 	<h1>New Officer Entry Form</h1>
 	<form action="../php/new_officer.php" method="post">
-		Badge Number: <button type="button" class="btn btn-secondary" onclick="generateBadgeNumber()">Generate</button>
+		Badge Number: <button type="button" class="btn btn-secondary btn-sm" onclick="generateBadgeNumber()">Generate</button>
 		<div class="input-group">
 			<input type="number" id="badge_number" name="badge_number" min="0" required><br> 
 		</div>
@@ -106,7 +106,7 @@
 		</div>
 		Status: 
 		<div class="input-group">
-			<select id="status" name="status" required>
+			<select id="status" name="status" class="form-control" required>
 				<option value="" selected disabled>Select Status</option>
 				<option value="Active">Active</option>
 				<option value="Inactive">Inactive</option>

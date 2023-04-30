@@ -84,10 +84,11 @@
 					}
 				});</script></head>
 <body>  
+<iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
   <div> 
 	<h1>New Crime Code Entry Form</h1>
 	<form action="../php/new_crime_code.php" method="post">
-		Crime Code: <button type="button" class="btn btn-secondary" onclick="generateCrimeCode()">Generate</button>
+		Crime Code: <button type="button" class="btn btn-secondary btn-sm" onclick="generateCrimeCode()">Generate</button>
 		<div class="input-group">
 			<input type="number" id="crime_code" name="crime_code" min="0" required><br>
 		</div>

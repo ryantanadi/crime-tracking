@@ -84,16 +84,17 @@
 					}
 				});</script></head>  
 <body>
+<iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
 	<div>
 		<h1>New Payment Form</h1>
 		<form action="../php/new_payment.php" method="post">
-			Payment ID: <button type="button" class="btn btn-secondary" onclick="generatePaymentID()">Generate</button>
+			Payment ID: <button type="button" class="btn btn-secondary btn-sm" onclick="generatePaymentID()">Generate</button>
 			<div class="input-group">
 				<input type="number" id="payment_id" name="payment_id" min="0" required><br>
 			</div>
 			Crime ID: 
 			<div class="input-group">
-				<select id="crime_id" name="crime_id" required>
+				<select id="crime_id" name="crime_id" class="form-control" required>
 					<option value="" selected disabled>Select Crime ID</option>
 					<?php
 						$crime_ids = retrieve_crime_ids();

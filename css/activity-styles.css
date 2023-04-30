@@ -3,12 +3,12 @@ label { display: inline-block; }
 input, textarea {
   display:inline-block;
   font-family:arial;
-  margin: 5px 10px 5px 40px;
+  margin: 5px 0px 5px 0px;
   padding: 8px 12px 8px 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  width: 90%;
+  width: 100%;
   font-size: small;
 }
     
@@ -65,7 +65,7 @@ footer {
 }
 
 .button {
-  background-color: #5979ee; /* Green */
+  background-color: #5979ee;
   border: none;
   color: rgb(160, 160, 160);
   padding: 15px 32px;
@@ -73,4 +73,10 @@ footer {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.form-control {
+  margin: 5px 0px 5px 0px;
+  padding: 8px 12px 8px 12px;
+  width: 100%;
 }

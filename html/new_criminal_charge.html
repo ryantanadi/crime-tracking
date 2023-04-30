@@ -75,12 +75,13 @@
 					}
 				});</script></head>
 <body>  
+<iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
   <div> 
 	<h1>New Criminal Charge Entry Form</h1>
 	<form action="../php/new_criminal_charge.php" method="post">
 		Criminal ID:
 		<div class="input-group">
-			<select id="criminal_id" name="criminal_id" required>
+			<select id="criminal_id" name="criminal_id" class="form-control" required>
 				<option value="" selected disabled>Select Criminal ID</option>
 				<?php
 					$criminal_ids = retrieve_criminal_ids();
@@ -92,7 +93,7 @@
 		</div>
 		Crime ID: 
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" required>
+			<select id="crime_id" name="crime_id" class="form-control" required>
 				<option value="" selected disabled>Select Crime ID</option>
 				<?php
 					$crime_ids = retrieve_crime_ids();

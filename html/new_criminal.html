@@ -85,10 +85,11 @@
 					}
 				});</script></head>
 <body>  
+<iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
   <div>  
 	<h1>New Criminal Entry Form</h1>
 	<form action="../php/new_criminal.php" method="post">
-		Criminal ID: <button type="button" class="btn btn-secondary" onclick="generateCriminalID()">Generate</button>
+		Criminal ID: <button type="button" class="btn btn-secondary btn-sm" onclick="generateCriminalID()">Generate</button>
 		<div class="input-group">
 			<input type="number" id="criminal_id" name="criminal_id" min="0" required><br> 
 		</div>
@@ -106,7 +107,7 @@
 		</div>
 		Violent Offender Status: 
 		<div class="input-group">
-			<select id="violent_off_status" name="violent_off_status" required>
+			<select id="violent_off_status" name="violent_off_status" class="form-control" required>
 				<option value="" selected disabled>Select</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -114,7 +115,7 @@
 		</div>
 		Probation Status: 
 		<div class="input-group">
-			<select id="probation_status" name="probation_status" required>
+			<select id="probation_status" name="probation_status" class="form-control" required>
 				<option value="" selected disabled>Select</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -126,7 +127,7 @@
 		</div>
 		Crime ID: 
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" required>
+			<select id="crime_id" name="crime_id" class="form-control" required>
 				<option value="" selected disabled>Select Crime ID</option>
 				<?php
 					$crime_ids = retrieve_crime_ids();

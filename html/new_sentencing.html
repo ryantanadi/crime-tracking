@@ -96,10 +96,11 @@
 					}
 				});</script></head>
 <body>  
+<iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
   <div>  
 	<h1>New Sentence Entry Form</h1>
 	<form action="../php/new_sentencing.php" method="post">
-		Sentencing ID: <button type="button" class="btn btn-secondary" onclick="generateSentencingID()">Generate</button>
+		Sentencing ID: <button type="button" class="btn btn-secondary btn-sm" onclick="generateSentencingID()">Generate</button>
 		<div class="input-group">
 			<input type="number" id="sentencing_id" name="sentencing_id" min="0" required><br>
 		</div>
@@ -121,7 +122,7 @@
 		</div>
 		Criminal ID: 
 		<div class="input-group">
-			<select id="criminal_id" name="criminal_id" required>
+			<select id="criminal_id" name="criminal_id" class="form-control" required>
 				<option value="" selected disabled>Select Criminal ID</option>
 				<?php
 					$criminal_ids = retrieve_criminal_ids();

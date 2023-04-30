@@ -93,16 +93,17 @@
 					}
 				});</script></head>
 <body>  
+<iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
 	<div>  
 	  <h1>New Appeal Entry Form</h1>
 	  <form action="../php/new_appeal.php" method="post">
-		  Appeal ID: <button type="button" class="btn btn-secondary" onclick="generateAppealID()">Generate</button>
+		  Appeal ID: <button type="button" class="btn btn-secondary btn-sm" onclick="generateAppealID()">Generate</button>
 		  <div class="input-group">
 			  <input type="number" id="appeal_id" name="appeal_id" min="0" required><br>
 		  </div>
 		  Appeal Status: 
 		  <div class="input-group">
-			  <select id="appeal_status" name="appeal_status" required>
+			  <select id="appeal_status" name="appeal_status" class="form-control" required>
 				  <option value="">Select Status</option>
 				  <option value="Pending">Pending</option>
 				  <option value="Dismissed">Dismissed</option>
@@ -123,7 +124,7 @@
 		  </div>
 		  Crime ID: 
 		  <div class="input-group">
-			  <select id="crime_id" name="crime_id" required>
+			  <select id="crime_id" name="crime_id" class="form-control" required>
 				<option value="" selected disabled>Select Crime ID</option>
 				<?php
 					$crime_ids = retrieve_crime_ids();
