@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Arrest Info</title>
+  <link rel="stylesheet" type="text/css" href="../css/arrest_info.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Fetch data from arrest_info.php and create table rows
+      $.getJSON('../php/arrest_info.php', function(data) {
+        $.each(data, function(index, row) {
+          var tr = $('<tr>').appendTo('#arrest-table');
+          $('<td>').text(row.arrest_id).appendTo(tr);
+          $('<td>').text(row.crime_id).appendTo(tr);
+          $('<td>').text(row.badge_number).appendTo(tr);
+          $('<td>').html('<button class="edit-button" data-arrest-id="' + row.arrest_id + '" data-crime-id="' + row.crime_id + '" data-badge-number="' + row.badge_number + '">Edit</button>').appendTo(tr);
+          $('<td>').html('<button class="delete-button" data-arrest-id="' + row.arrest_id + '">Delete</button>').appendTo(tr);
+        });
+      });
+      //search button
+      $('#search-button').click(function() {
+      var arrestID = $('#search-input').val();
+      $.ajax({
+        url: '../php/arrest_info.php',
+        type: 'GET',
+        data: {
+          arrest_id: arrestID
+        },
+        dataType: 'json',
+        success: function(data) {
+          // Clear the table rows
+          $('#arrest-table tbody').empty();
+          // Add new table rows with the search results
+          $.each(data, function(index, row) {
+            var tr = $('<tr>').appendTo('#officer-table');
+            $('<td>').text(row.arrest_id).appendTo(tr);
+            $('<td>').text(row.crime_id).appendTo(tr);
+            $('<td>').text(row.badge_number).appendTo(tr);
+            $('<td>').html('<button class="edit-button" data-arrest-id="' + row.arrest_id + '" data-crime-id="' + row.crime_id + '" data-badge-number="' + row.badge_number + '">Edit</button>').appendTo(tr);
+            $('<td>').html('<button class="delete-button" data-arrest-id="' + row.arrest_id + '">Delete</button>').appendTo(tr);
+          });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('Error: ' + textStatus + ' ' + errorThrown);
+        }
+      });
+    });
+    //delete button
+        $('#arrest-table').on('click', '.delete-button', function() {
+      var arrestID = $(this).closest('tr').find('td:first-child').text();
+      if (confirm('Are you sure you want to delete arrest ' + arrestID + '?')) {
+        // Send AJAX request to delete arrest record by arrest_ID
+        $.ajax({
+          url: '../php/delete_arrest_info.php',
+          type: 'POST',
+          data: { arrest_id: arrestID },
+          dataType: 'json',
+          success: function(data) {
+            alert('Arrest ' + arrestID + ' has been deleted.');
+            // Refresh arrest table
+            location.reload();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+      }
+    });
+       //edit button
+            $('#arrest-table').on('click', '.edit-button', function() {
+          // Get the data of the clicked row
+          var arrestID = $(this).data('arrest_id');
+          var crimeID = $(this).data('crime_id');
+          var badgeNumber = $(this).data('badge_number');
+
+          // Save the data to localStorage
+          localStorage.setItem('arrestID', arrestID);
+          localStorage.setItem('crimeID', crimeID);
+          localStorage.setItem('badgeNumber', badgeNumber);
+
+          // Redirect to edit_arrest_info.html
+          window.location.href = 'edit_arrest_info.html';
+      });
+
+
+
+
+    });
+
+
+  </script>
+</head>
+<body>
+
+  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+  <h1>Arrest Info</h1>
+  <div class="button-container">
+    <button class="add-button" onclick="location.href='new_arrest_info.html'">Add New Arrest Info</button>
+  </div>
+   <div class="search-container">
+    <input type="text" id="search-input" placeholder="Search by Arrest ID">
+    <button id="search-button">Search</button>
+  </div>
+  <table id="arrest-table">
+    <thead>
+      <tr>
+        <th>Arrest ID</th>
+        <th>Crime ID</th>
+        <th>Badge Number</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+</html>
