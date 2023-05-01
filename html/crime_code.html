@@ -118,28 +118,33 @@
   </script>
 </head>
 <body>
-
   <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
-  <h1>Crime Code</h1>
-  <div class="button-container">
-    <button class="add-button" onclick="location.href='new_crime_code.html'">Add New Crime Code</button>
-    <button id="download-btn">Download CSV</button>
-  </div>
-   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search by Crime Code">
-    <button id="search-button">Search</button>
-  </div>
-  <table id="crime-code-table">
-    <thead>
-      <tr>
-        <th>Crime Code</th>
-        <th>Crime Name</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <main>
+    <section>
+      <h1>Crime Code</h1>
+      <div class="buttons">
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search by Crime Code">
+          <button id="search-button">Search</button>
+        </div>
+        <div class="button-container">
+          <button class="add-button" onclick="location.href='new_crime_code.html'">Add New Crime Code</button>
+          <button id="download-btn">Download CSV</button>
+        </div>
+      </div>
+      <table id="crime-code-table">
+        <thead>
+          <tr>
+            <th>Crime Code</th>
+            <th>Crime Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
 </body>
 </html>
