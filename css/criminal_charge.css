@@ -131,8 +131,16 @@ h1 {
   align-items: center;
 }
 
-#search-input {
-  width: 300px;
+#criminal-id-input {
+  width: 200px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-right: 10px;
+}
+
+#crime-id-input {
+  width: 200px;
   height: 35px;
   border-radius: 5px;
   border: 1px solid black;
@@ -148,7 +156,7 @@ h1 {
   font-weight: bold;
   padding: 10px 20px;
   cursor: pointer; 
-  margin-right: 285px;
+  margin-right: 175px;
   width: 100px;
   height: 40px;
 }
