@@ -135,30 +135,36 @@
 </head>
 <body>
   <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
-  <h1>Appeal</h1>
-  <div class="button-container">
-    <button class="add-button" onclick="location.href='new_appeal.html'">Add New Appeal</button>
-    <button id="download-btn">Download CSV</button>
-  </div>
-   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search by Appeal ID">
-    <button id="search-button">Search</button>
-  </div>
-  <table id="appeal-table">
-    <thead>
-      <tr>
-        <th>Appeal ID</th>
-        <th>Appeal Status</th>
-        <th>Hearing Date</th>
-        <th>Filing Date</th>
-        <th>Appeal Count</th>
-        <th>Crime ID</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <main>
+    <section>
+      <h1>Appeal</h1>
+      <div class="buttons">
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search by Appeal ID">
+          <button id="search-button">Search</button>
+        </div>
+        <div class="button-container">
+          <button class="add-button" onclick="location.href='new_appeal.html'">Add New Appeal</button>
+          <button id="download-btn">Download CSV</button>
+        </div>
+      </div>
+      <table id="appeal-table">
+        <thead>
+          <tr>
+            <th>Appeal ID</th>
+            <th>Appeal Status</th>
+            <th>Hearing Date</th>
+            <th>Filing Date</th>
+            <th>Appeal Count</th>
+            <th>Crime ID</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
 </body>
 </html>
