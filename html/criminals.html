@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Criminals</title>
-  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <link rel="stylesheet" type="text/css" href="../css/criminals.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -143,32 +143,39 @@
 <body>
 
   <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
-  <h1>Criminals</h1>
-  <div class="button-container">
-    <button class="add-button" onclick="location.href='new_criminal.html'">Add New Criminal</button>
-    <button id="download-btn">Download CSV</button>
-  </div>
-   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search by Criminal ID">
-    <button id="search-button">Search</button>
-  </div>
-  <table id="criminals-table">
-    <thead>
-      <tr>
-        <th>Criminal ID</th>
-        <th>Name</th>
-        <th>Phone Contact</th>
-        <th>Address</th>
-        <th>Violent Offender</th>
-        <th>Probation Status</th>
-        <th>Alias</th>
-        <th>Crime ID</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <main>
+    <section>
+      <h1>Criminals</h1>
+      <div class="buttons">
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search by Criminal ID">
+          <button id="search-button">Search</button>
+        </div>
+        
+        <div class="button-container">
+          <button class="add-button" onclick="location.href='new_criminal.html'">Add New Criminal</button>
+          <button id="download-btn">Download CSV</button>
+        </div>
+      </div>
+      <table id="criminals-table">
+        <thead>
+          <tr>
+            <th>Criminal ID</th>
+            <th>Name</th>
+            <th>Phone Contact</th>
+            <th>Address</th>
+            <th>Violent Offender</th>
+            <th>Probation Status</th>
+            <th>Alias</th>
+            <th>Crime ID</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
 </body>
 </html>
