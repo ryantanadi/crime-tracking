@@ -114,37 +114,39 @@
             link.setAttribute("download", "table-data.csv");
             link.click();
           };
-
-
     });
-
 
   </script>
 </head>
 <body>
-
   <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
-  <h1>Arrest Info</h1>
-  <div class="button-container">
-    <button class="add-button" onclick="location.href='new_arrest_info.html'">Add New Arrest Info</button>
-    <button id="download-btn">Download CSV</button>
-  </div>
-   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search by Arrest ID">
-    <button id="search-button">Search</button>
-  </div>
-  <table id="arrest-table">
-    <thead>
-      <tr>
-        <th>Arrest ID</th>
-        <th>Crime ID</th>
-        <th>Badge Number</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <main>
+    <section>
+      <h1>Arrest Info</h1>
+      <div class="buttons">
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search by Arrest ID">
+          <button id="search-button">Search</button>
+        </div>
+        <div class="button-container">
+          <button class="add-button" onclick="location.href='new_arrest_info.html'">Add New Arrest Info</button>
+          <button id="download-btn">Download CSV</button>
+        </div> 
+      </div>
+      <table id="arrest-table">
+        <thead>
+          <tr>
+            <th>Arrest ID</th>
+            <th>Crime ID</th>
+            <th>Badge Number</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
 </body>
 </html>
