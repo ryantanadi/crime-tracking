@@ -70,11 +70,15 @@
 <body>  
   <div>  
     <h1>User Registration</h1>
-    <form action="register.php" method="post">     
-	  First name: <input type="text" id="fname" name="fname" required /> <br/>
-      Last name: <input type="text" id="lname" name="lname" required /> <br/>
-      Username: <input type="text" id="uname" name="uname" required /> <br/>
-      Password: <input type="password" id="pwd" name="pwd" required /> <br/>
+    <form action="../php/register.php" method="post">
+      Username: <input type="text" id="username" name="username" required /> <br/>
+      Password: <input type="password" id="password" name="password" required /> <br/>
+        Role:
+      <select id="access_level" name="access_level">
+        <option value="judge">Judge</option>
+        <option value="admin">Admin</option>
+        <option value="cashier">Cashier</option>
+      </select>
       <input type="submit" value="Submit" class="btn" />
     </form>
   </div>
