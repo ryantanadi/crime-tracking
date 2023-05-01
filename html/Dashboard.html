@@ -1,3 +1,27 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: '../php/check_login.php',
+            success: function(response) {
+                // Get the username from the session
+                var username = response.username;
+                // Do something with the username, such as display it on the page
+                $('#username').text(username);
+            },
+            error: function(xhr) {
+                if (xhr.status == 401) {
+                    // User is not logged in, redirect to login page
+                    window.location.href = 'login.html';
+                } else {
+                    // Unexpected error occurred, show error message
+                    alert('An error occurred while checking your access level.');
+                }
+            }
+        });
+    });
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,15 +29,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crime Tracking System</title>
     <link rel="stylesheet" href="../css/Dashboard.css">
-    <script src="../js/Dashboard.js" defer></script>
+    <script src="Dashboard.js" defer></script>
 </head>
 <body>
-  <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
+    <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
     <main>
         <section>
             <h1>Dashboard</h1>
-            <div id="pieChartContainer"></div>
-            <div id="barChartContainer"></div>
+            <h1>Welcome, <span id="username"></span>!</h1>
+            <p>Total number of criminals: <span id="criminalCount"></span></p>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+            $(document).ready(function() {
+              $.ajax({
+                url: "../php/get_criminal_count.php",
+                type: "GET",
+                dataType: "text",
+                success: function(data) {
+                  $("#criminalCount").text(data);
+                },
+                error: function() {
+                  console.log("Failed to get criminal count.");
+                }
+              });
+            });
+            </script>
+            <p>Total number of granted appeals: <span id="grantedAppealsCount"></span></p>
+            <script>
+            $(document).ready(function() {
+              $.ajax({
+                url: "../php/get_granted_appeals_count.php",
+                type: "GET",
+                dataType: "text",
+                success: function(data) {
+                  $("#grantedAppealsCount").text(data);
+                },
+                error: function() {
+                  console.log("Failed to get appeals count.");
+                }
+              });
+            });
+            </script>
+            <img class="center-right" src="https://www.researchgate.net/profile/Michael-Abiodun/publication/342952869/figure/fig1/AS:899270352945153@1583208179781/Pie-chart-of-Crime-reported-N-174.png" alt="Pie Chart of Crime Reported" style="width: 100%; max-width: 800px; display: block; margin-top: 1rem;">
         </section>
     </main>
 </body>

@@ -1,4 +1,5 @@
 <?php
+
 require('config.php');
 
 // Connect to the database
