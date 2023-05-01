@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Sentencing</title>
-  <link rel="stylesheet" type="text/css" href="../css/officer.css">
+  <link rel="stylesheet" type="text/css" href="../css/sentencing.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -133,30 +133,36 @@
 </head>
 <body>
   <iframe src="side_menu.html" width="200" height="500" frameborder="0" style="float: left;"></iframe>
-  <h1>Sentencing</h1>
-  <div class="button-container">
-    <button class="add-button" onclick="location.href='new_sentencing.html'">Add New Sentencing</button>
-    <button id="download-btn">Download CSV</button>
-  </div>
-   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search by Sentencing ID">
-    <button id="search-button">Search</button>
-  </div>
-  <table id="sentencing-table">
-    <thead>
-      <tr>
-        <th>Sentencing ID</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Sentence Type</th>
-        <th>Number of Violations</th>
-        <th>Criminal ID</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <main>
+    <section>
+      <h1>Sentencing</h1>
+      <div class="buttons">
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search by Sentencing ID">
+          <button id="search-button">Search</button>
+        </div> 
+        <div class="button-container">
+          <button class="add-button" onclick="location.href='new_sentencing.html'">Add New Sentencing</button>
+          <button id="download-btn">Download CSV</button>
+        </div>
+      </div>
+      <table id="sentencing-table">
+        <thead>
+          <tr>
+            <th>Sentencing ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Sentence Type</th>
+            <th>Number of Violations</th>
+            <th>Criminal ID</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
 </body>
 </html>
