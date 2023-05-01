@@ -1,3 +1,24 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: '../php/check_login.php',
+            success: function(response) {
+
+            },
+            error: function(xhr) {
+                if (xhr.status == 401) {
+                    // User is not logged in, redirect to login page
+                    window.location.href = 'login.html';
+                } else {
+                    // Unexpected error occurred, show error message
+                    alert('An error occurred while checking your access level.');
+                }
+            }
+        });
+    });
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +42,7 @@
                 <li><a href="charge.html" target="_parent">Charges</a></li>
                 <li><a href="arrest_info.html" target="_parent">Arrest Information</a></li>
                 <li><a href="payment.html" target="_parent">Payment</a></li>
+                <li><a href="../php/logout.php" target="_parent">Logout</a></li>
             </ul>
         </nav>
     </aside>

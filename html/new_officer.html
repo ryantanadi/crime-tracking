@@ -1,3 +1,28 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: 'GET',
+            url: '../php/check_admin.php',
+            success: function(response) {
+
+            },
+            error: function(xhr) {
+                if (xhr.status == 401) {
+                    // User is not logged in, redirect to login page
+                    window.location.href = 'login.html';
+                } else if (xhr.status == 403) {
+                    // User does not have valid access level, show error message and redirect to dashboard
+                    alert('You do not have permission to add new entries.');
+                    window.location.href = 'officer.html';
+                } else {
+                    // Unexpected error occurred, show error message
+                    alert('An error occurred while checking your access level.');
+                }
+            }
+        });
+    });
+</script>
 <!DOCTYPE html>
 <html>
 <head>

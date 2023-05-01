@@ -14,7 +14,7 @@ body {
 }
 
 aside {
-    background-color: #ffffff;
+    background-color: #fff;
     width: 250px;
     min-height: 100vh;
     padding: 1rem;
@@ -44,7 +44,7 @@ nav a:hover {
 main {
     flex: 1;
     padding: 1rem;
-    margin-left: 20px;
+    margin-left: 250px;
 }
 
 section {
@@ -58,13 +58,8 @@ h1 {
     font-weight: 700;
 }
 
-#pieChartContainer,
-#barChartContainer {
-    height: 400px;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+.center-right {
+    display: block;
+    margin-left: auto;
+    margin-right: 200px;
 }
- 
