@@ -89,7 +89,7 @@
   <div>
 	<h1>Edit Criminal Entry Form</h1>
 	<form action="../php/update_criminal.php" method="post">
-
+		Criminal ID:
 		<div class="input-group">
 			<input type="number" id="criminal_id" name="criminal_id" min="0" readonly required><br>
 		</div>
@@ -127,7 +127,7 @@
 		</div>
 		Crime ID:
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" required>
+			<select id="crime_id" name="crime_id" class="form-control" required>
 				<option value="" selected disabled>Select Crime ID</option>
 			</select>
 		</div>
@@ -156,7 +156,7 @@
 			xhr.send();
 		</script>
 
-		<input type="submit" value="Submit" class="btn" />
+		<input type="submit" value="Save Changes" class="btn" />
 
     </form>
   </div>

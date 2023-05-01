@@ -81,7 +81,7 @@
 	<form action="../php/new_crime_code.php" method="post">
 		Crime ID:
 		<div class="input-group">
-			<select id="crime_id" name="crime_id" required>
+			<select id="crime_id" name="crime_id" class="form-control" required>
 				<option value="" selected disabled>Select Crime ID</option>
 			</select>
 		</div>
@@ -106,9 +106,8 @@
 			xhr.send();
 		</script>
 		Crime Code:
-
 		<div class="input-group">
-			<select id="crime_code" name="crime_code" required>
+			<select id="crime_code" name="crime_code" class="form-control" required>
 				<option value="" selected disabled>Select Crime Code</option>
 			</select>
 		</div>
@@ -131,7 +130,7 @@
 			xhr.open("GET", "../php/get_crime_codes.php", true);
 			xhr.send();
 		</script>
-		<input type="submit" value="Submit" class="btn" />
+		<input type="submit" value="Save Changes" class="btn" />
 
     </form>
   </div>

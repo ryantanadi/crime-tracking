@@ -17,18 +17,36 @@
 		<div class="input-group">
 			<input type="number" id="payment_id" name="payment_id" min="0" required><br>
 		</div>
-		Crime ID: 
-		<div class="input-group">
+		Crime ID:
+		  <div class="input-group">
 			<select id="crime_id" name="crime_id" class="form-control" required>
 				<option value="" selected disabled>Select Crime ID</option>
-				<?php
-					$crime_ids = retrieve_crime_ids();
-					foreach ($crime_ids as $crime_id) {
-							echo '<option value="' . $crime_id . '">' . $crime_id . '</option>';
-					}
-			    ?>
 			</select>
 		</div>
+
+		<script>
+			// Make an AJAX request to retrieve the crime IDs
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var crimeIds = JSON.parse(this.responseText);
+					// Populate the select element with the crime IDs
+					var selectElement = document.getElementById("crime_id");
+					for (var i = 0; i < crimeIds.length; i++) {
+						var option = document.createElement("option");
+						option.value = crimeIds[i];
+						option.text = crimeIds[i];
+						selectElement.add(option);
+					}
+					var crimeID = localStorage.getItem('crimeID');
+					if (crimeID && crimeID.indexOf(crimeID) >= 0) {
+						selectElement.value = crimeID;
+					}
+				}
+			};
+			xhr.open("GET", "../php/get_crime_id.php", true);
+			xhr.send();
+		</script>
 		Amount Paid: 
  		<div class="input-group">
 			<input type="number" id="amount_paid" name="amount_paid" step="0.01" min="0" required><br>
